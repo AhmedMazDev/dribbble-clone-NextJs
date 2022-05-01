@@ -1,8 +1,13 @@
+import { Heading } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import Navbar from "../components/Navbar";
 
 const Home: NextPage = () => {
-  return <Navbar />;
+  return (
+    <>
+      <Heading fontSize={500}>Hello</Heading>
+      <Heading fontSize={500}>Hello</Heading>
+    </>
+  );
 };
 
 export default Home;

@@ -1,6 +1,7 @@
-import { Flex, Heading, Image, Text } from "@chakra-ui/react";
-import router, { useRouter } from "next/router";
+import { Flex, Heading, Icon, Image, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
+import { IoMdArrowBack } from "react-icons/io";
 
 type AuthPageLayoutProps = {
   navText: string;
@@ -34,19 +35,30 @@ const AuthPageLayout: React.FC<AuthPageLayoutProps> = ({
         padding={{ base: "2rem 2rem", md: "2rem 6rem" }}
         direction="column"
       >
-        <Flex justify="flex-end">
-          <Text textAlign="end" mr={2}>
-            {navText}
-          </Text>
-          <Text
-            color="#3AA4FF"
+        <Flex justify="space-between" align="center">
+          <Icon
+            as={IoMdArrowBack}
             cursor="pointer"
+            h={8}
+            w={8}
             onClick={() => {
-              router.push(`/${navLinkURL}`);
+              router.push("/");
             }}
-          >
-            {navLinkText}
-          </Text>
+          />
+          <Flex>
+            <Text textAlign="end" mr={2}>
+              {navText}
+            </Text>
+            <Text
+              color="#3AA4FF"
+              cursor="pointer"
+              onClick={() => {
+                router.push(`/${navLinkURL}`);
+              }}
+            >
+              {navLinkText}
+            </Text>
+          </Flex>
         </Flex>
         <Heading
           as="h1"
