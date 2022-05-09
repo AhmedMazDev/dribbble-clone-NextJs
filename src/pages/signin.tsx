@@ -8,18 +8,34 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  useToast,
 } from "@chakra-ui/react";
+import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineMail } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { joiResolver } from "@hookform/resolvers/joi";
-
 import AuthPageLayout from "../components/Layout/AuthPageLayout";
+import { UserContext } from "../context/userContext";
+import { FIREBASE_ERRORS } from "../firebase/error";
+import {
+  signUserInWithEmail,
+  signUserWithGoogle,
+} from "../firebase/helpers/authFunctions";
 
 const signin: React.FC = () => {
+  const router = useRouter();
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user]);
+
   return (
     <AuthPageLayout
       title="Welcome Back to Inspiry"
@@ -42,6 +58,9 @@ const schema = Joi.object({
 });
 
 const SignInForm: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -50,7 +69,61 @@ const SignInForm: React.FC = () => {
     resolver: joiResolver(schema),
   });
 
-  const onSubmit = handleSubmit((data) => {});
+  const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
+    try {
+      await signUserInWithEmail(data.email, data.password);
+      toast({
+        status: "success",
+        title: "Signed In Successful",
+        description:
+          "You have successfully signed in, you will be redirected soon",
+        isClosable: true,
+        position: "top",
+        duration: 3000,
+      });
+      router.push("/");
+    } catch (e: any) {
+      console.log("signin error", e);
+      toast({
+        status: "error",
+        title: "Error",
+        description: FIREBASE_ERRORS[e.message as keyof typeof FIREBASE_ERRORS],
+        isClosable: true,
+        duration: 3000,
+        position: "top",
+      });
+    }
+    setIsLoading(false);
+  });
+
+  const onSignInWithGoogle = async () => {
+    setIsLoading(true);
+    try {
+      await signUserWithGoogle();
+      toast({
+        status: "success",
+        title: "Signed In Successful",
+        description:
+          "You have successfully signed in, you will be redirected soon",
+        isClosable: true,
+        position: "top",
+        duration: 3000,
+      });
+      router.push("/");
+    } catch (e: any) {
+      console.log("signin error", e);
+      toast({
+        status: "error",
+        title: "Error",
+        description: FIREBASE_ERRORS[e.message as keyof typeof FIREBASE_ERRORS],
+        isClosable: true,
+        duration: 3000,
+        position: "top",
+      });
+    }
+    setIsLoading(false);
+  };
 
   return (
     <>
@@ -113,13 +186,20 @@ const SignInForm: React.FC = () => {
         }}
         my={8}
       >
-        <Button mr={4} mb={4} maxWidth="220px" onClick={onSubmit}>
+        <Button
+          mr={4}
+          mb={4}
+          maxWidth="220px"
+          onClick={onSubmit}
+          isLoading={isLoading}
+        >
           Sign In
         </Button>
         <Button
           variant="white"
           leftIcon={<Icon as={FcGoogle} h={6} w={6} />}
           maxWidth="220px"
+          onClick={onSignInWithGoogle}
         >
           Signin With Google
         </Button>

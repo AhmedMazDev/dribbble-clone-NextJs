@@ -17,5 +17,19 @@ export const Input: ComponentStyleConfig = {
         borderRadius: "18px",
       },
     },
+    title: {
+      field: {
+        bg: "transparent",
+        backgroundColor: "transparent",
+        border: "none",
+        fontSize: {
+          sm: "18px",
+          md: "26px",
+        },
+        fontWeight: "medium",
+        color: "#4A4A4A",
+        textColor: "#4A4A4A",
+      },
+    },
   },
 };

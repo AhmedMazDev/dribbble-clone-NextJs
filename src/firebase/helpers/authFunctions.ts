@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { doc, getDoc, setDoc, writeBatch } from "firebase/firestore";
@@ -32,7 +33,7 @@ export const createUserWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const createdUser = await signInWithPopup(auth, provider);
   await addUserToFirestore(createdUser.user.uid, {
-    username: createdUser.user.displayName?.trim() || "",
+    username: createdUser.user.displayName?.replaceAll(" ", "") || "",
     displayName: createdUser.user.displayName || "",
     email: createdUser.user.email || "",
     photoUrl: createdUser.user.photoURL || "",
@@ -41,7 +42,25 @@ export const createUserWithGoogle = async () => {
   });
 };
 
-export const signUserInWithEmail = async () => {};
+export const signUserWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  const createdUser = await signInWithPopup(auth, provider);
+  const userExist = await getDoc(doc(db, `users/${createdUser.user.uid}`));
+  if (!userExist.exists()) {
+    await addUserToFirestore(createdUser.user.uid, {
+      username: createdUser.user.displayName?.replaceAll(" ", "") || "",
+      displayName: createdUser.user.displayName || "",
+      email: createdUser.user.email || "",
+      photoUrl: createdUser.user.photoURL || "",
+      bio: "",
+      location: "",
+    });
+  }
+};
+
+export const signUserInWithEmail = async (email: string, password: string) => {
+  const user = await signInWithEmailAndPassword(auth, email, password);
+};
 
 export const addUserToFirestore = async (userID: string, user: User) => {
   await setDoc(doc(db, "users", userID), user);
@@ -54,7 +73,6 @@ export const addUserToFirestore = async (userID: string, user: User) => {
 };
 
 export const isUserNameExists = async (username: string) => {
-  console.log("test");
   const usernameRef = await getDoc(doc(db, "usernames", username));
   return usernameRef.exists();
 };

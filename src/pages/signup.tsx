@@ -13,16 +13,17 @@ import {
 } from "@chakra-ui/react";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
+import debounce from "lodash.debounce";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineMail } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
-import { FiUsers } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+import { FiUsers } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
-import debounce from "lodash.debounce";
 import AuthPageLayout from "../components/Layout/AuthPageLayout";
+import { UserContext } from "../context/userContext";
 import { FIREBASE_ERRORS } from "../firebase/error";
 import {
   createUserWithEmail,
@@ -31,6 +32,15 @@ import {
 } from "../firebase/helpers/authFunctions";
 
 const signup: React.FC = () => {
+  const router = useRouter();
+  const user = useContext(UserContext);
+  console.log(user);
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user]);
   return (
     <AuthPageLayout
       form={<SignUpForm />}

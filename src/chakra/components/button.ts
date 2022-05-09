@@ -26,5 +26,22 @@ export const Button: ComponentStyleConfig = {
         bg: "whitealpha.50",
       },
     },
+    outline: {
+      bg: "white",
+      color: "textColor",
+      border: "2px solid #3AA4FF",
+      borderRadius: "10px",
+    },
+    cancel: {
+      bg: "white",
+      color: "textColor",
+      border: "1px solid #3AA4FF",
+      fontWeight: "400",
+      fontFamily: "Rubik",
+      borderRadius: "10px",
+      _hover: {
+        bg: "gray.100",
+      },
+    },
   },
 };
