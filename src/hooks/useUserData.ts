@@ -1,30 +1,61 @@
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import {
+  useCollection,
+  useCollectionData,
+  useCollectionDataOnce,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
+import { collectionToJson } from "../firebase/helpers/firestoreFunctions";
 import { auth, db } from "../firebase/firebaseConfig";
-import { User } from "../interfaces/User";
+import { Collection, CollectionSnap } from "../interfaces/Collection";
+import { User, UserLikedPosts, UserPostsCollection } from "../interfaces/User";
 
 export function useUserData() {
   const [currentUser] = useAuthState(auth);
   const [user, setUser] = useState<User | null>(null);
+  const [userLikedPosts, setUserLikedPosts] = useState<UserLikedPosts[] | null>(
+    null
+  );
+  const [userPostsCollection, setUserPostsCollection] = useState<
+    Collection[] | null
+  >(null);
+  const [userCollections, setUserCollections] = useState(null);
 
-  const getUserData = async () => {
-    const userRef = doc(db, "users", currentUser!.uid);
-    const userSnap = await getDoc(userRef);
-    if (userSnap.exists()) {
-      setUser(userSnap.data() as User);
-    }
-  };
+  const [userDataRealtime] = useDocumentData(
+    doc(db, `users/${currentUser?.uid!}`)
+  );
+
+  const [userLikedPostsRealtime] = useCollectionData(
+    collection(db, `users/${currentUser?.uid!}/likedPosts`)
+  );
+
+  const [userPostsCollectionRealtime] = useCollectionData(
+    collection(db, `users/${currentUser?.uid!}/collections`)
+  );
 
   useEffect(() => {
     if (currentUser) {
-      getUserData();
+      setUser({ uid: currentUser.uid, ...userDataRealtime } as User);
     } else {
       setUser(null);
+      setUserLikedPosts(null);
+      setUserPostsCollection(null);
     }
-  }, [currentUser]);
+  }, [userDataRealtime]);
+
+  useEffect(() => {
+    const likedPosts = userLikedPostsRealtime?.map((doc) => {
+      return { postId: doc.postId as string } as UserLikedPosts;
+    });
+    setUserLikedPosts(likedPosts || null);
+  }, [userLikedPostsRealtime]);
 
   return {
     user,
+    userLikedPosts,
+    userPostsCollection,
+    userCollections,
   };
 }

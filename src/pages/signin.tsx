@@ -28,13 +28,13 @@ import {
 
 const signin: React.FC = () => {
   const router = useRouter();
-  const user = useContext(UserContext);
+  const userData = useContext(UserContext);
 
   useEffect(() => {
-    if (user) {
+    if (userData.user) {
       router.push("/");
     }
-  }, [user]);
+  }, [userData.user]);
 
   return (
     <AuthPageLayout
@@ -200,6 +200,7 @@ const SignInForm: React.FC = () => {
           leftIcon={<Icon as={FcGoogle} h={6} w={6} />}
           maxWidth="220px"
           onClick={onSignInWithGoogle}
+          isLoading={isLoading}
         >
           Signin With Google
         </Button>

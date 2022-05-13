@@ -8,10 +8,17 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
 import { CUIAutoComplete } from "chakra-ui-autocomplete";
-import useSelectImage from "../hooks/useSelectFile";
+import { nanoid } from "nanoid/async";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { AppContext } from "../context/AppContext/appContext";
+import { UserContext } from "../context/userContext";
+import { createPost, getTags } from "../firebase/helpers/firestoreFunctions";
+import useSelectImage from "../hooks/useSelectFile";
+import useUploadImage from "../hooks/useUploadImage";
+import { Tag } from "../interfaces/AppContext";
 
 type uploadProps = {};
 
@@ -30,7 +37,7 @@ const upload: React.FC<uploadProps> = () => {
       gap="2rem"
       height="100%"
     >
-      {image ? (
+      {imageConfirmed ? (
         <PostDetails image={image} imageName={imageName} imageUrl={imageUrl} />
       ) : (
         <SelectImage
@@ -82,10 +89,10 @@ const SelectImage: React.FC<SelectImageProps> = ({
   }, [error]);
   return (
     <>
-      <Heading fontSize={{ sm: "30px", md: 48 }} mt={4}>
+      <Heading fontSize={[25, 48]} mt={4} textAlign="center">
         Show us what are you made of
       </Heading>
-      <Text fontSize={{ sm: 15, md: 20 }} fontWeight="light">
+      <Text fontSize={{ sm: 15, md: 20 }} fontWeight="light" textAlign="center">
         Upload your design. This will also be used as the thumbnail
       </Text>
 
@@ -145,65 +152,126 @@ type PostDetailsProps = {
   imageName: string;
 };
 
-const list = [
-  { label: "Nature", value: "Nature" },
-  { label: "People", value: "People" },
-  { label: "Animals", value: "Animals" },
-  { label: "Food", value: "Food" },
-  { label: "Technology", value: "Technology" },
-  { label: "Fashion", value: "Fashion" },
-  { label: "Culture", value: "Culture" },
-  { label: "Art", value: "Art" },
-  { label: "Music", value: "Music" },
-  { label: "Sports", value: "Sports" },
-  { label: "Travel", value: "Travel" },
-  { label: "Fashion", value: "Fashion" },
-  { label: "Culture", value: "Culture" },
-  { label: "Art", value: "Art" },
-  { label: "Music", value: "Music" },
-  { label: "Sports", value: "Sports" },
-];
-
-interface Item {
-  label: string;
-  value: string;
-}
-
 const PostDetails: React.FC<PostDetailsProps> = ({
   image,
   imageName,
   imageUrl,
 }) => {
   const router = useRouter();
-  const [tags, setTags] = useState<Item[]>([]);
+  const toast = useToast();
+  const userData = useContext(UserContext);
+  const appContext = useContext(AppContext);
+  const { error, imageURL, uploadImage, loading } = useUploadImage();
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [title, setTitle] = useState<string>("");
+  const [slug, setSlug] = useState<string>("");
 
-  const handleSelectedItemsChange = (selectedItems?: Item[]) => {
+  const handleSelectedItemsChange = (selectedItems?: Tag[]) => {
     if (selectedItems) {
       setTags(selectedItems);
     }
   };
 
-  const onCreatePost = () => {};
+  const onCreatePost = async () => {
+    try {
+      if (!title || title.length < 3 || title.length > 30) {
+        throw new Error("Title must be between 3 and 30 characters");
+      }
+      if (!tags.length || tags.length >= 5) {
+        throw new Error("Tags must be between 1 and 5");
+      }
+
+      const slug = encodeURI(
+        title.replaceAll(" ", "").toLowerCase() + "-" + (await nanoid(5))
+      );
+      setSlug(slug);
+      await uploadImage(image!, imageName, userData.user?.uid!, slug);
+    } catch (error: any) {
+      console.log("upload error", error.message);
+      toast({
+        title: "Error",
+        description: error.message,
+        status: "error",
+        position: "top",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
+
+  useEffect(() => {
+    async function createPostAsync() {
+      await createPost(
+        title,
+        slug,
+        imageURL,
+        tags.map((tag) => tag.value),
+        userData.user?.username!,
+        userData.user?.photoUrl
+      );
+    }
+
+    if (imageURL) {
+      try {
+        createPostAsync();
+        toast({
+          description: "Post created successfully",
+          status: "success",
+          position: "top",
+          duration: 2000,
+          isClosable: true,
+        });
+        router.push(`/posts/${slug}`);
+      } catch (error: any) {
+        toast({
+          title: "Error",
+          description: "Error Creating Post",
+          status: "error",
+          position: "top",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+    }
+  }, [imageURL]);
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Error Uploading Image",
+        status: "error",
+        position: "top",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  }, [error]);
 
   return (
     <Flex direction="column" w="100%" my={8} gap={10}>
-      <Input variant="title" placeholder="Give it a title" zIndex={1} />
+      <Input
+        variant="title"
+        placeholder="Give it a title"
+        zIndex={1}
+        value={title}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setTitle(e.target.value);
+        }}
+      />
       <Flex justify="center">
         <Image
           src={imageUrl}
           width="100%"
           height="100%"
-          maxHeight="400px"
-          maxWidth="600px"
+          maxHeight="500px"
+          maxWidth="700px"
           borderRadius={15}
         />
       </Flex>
       <Flex direction="column">
-        {/* <Text fontSize={{ sm: "18px", md: "26px" }} color="#4A4A4A">
-          Tags
-        </Text> */}
         <CUIAutoComplete
-          items={list}
+          items={appContext?.tags!}
           placeholder={"pick a tag"}
           label={"Tags"}
           selectedItems={tags}
@@ -218,10 +286,16 @@ const PostDetails: React.FC<PostDetailsProps> = ({
               md: "26px",
             },
           }}
+          listStyleProps={{
+            maxHeight: "100px",
+            overflowY: "scroll",
+          }}
         />
       </Flex>
       <Flex justifyContent="center" gap={8}>
-        <Button onClick={onCreatePost}>Publish Post</Button>
+        <Button onClick={onCreatePost} isLoading={loading}>
+          Publish Post
+        </Button>
         <Button
           variant="cancel"
           onClick={() => {

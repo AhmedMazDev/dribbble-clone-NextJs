@@ -33,14 +33,13 @@ import {
 
 const signup: React.FC = () => {
   const router = useRouter();
-  const user = useContext(UserContext);
-  console.log(user);
+  const userData = useContext(UserContext);
 
   useEffect(() => {
-    if (user) {
+    if (userData.user) {
       router.push("/");
     }
-  }, [user]);
+  }, [userData.user]);
   return (
     <AuthPageLayout
       form={<SignUpForm />}
@@ -324,6 +323,7 @@ function SignUpForm() {
           leftIcon={<Icon as={FcGoogle} h={6} w={6} />}
           maxWidth="220px"
           onClick={onCreateWithGoogle}
+          isLoading={isLoading}
         >
           Signup With Google
         </Button>

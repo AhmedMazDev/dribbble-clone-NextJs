@@ -1,4 +1,7 @@
 import { createContext } from "react";
-import { User } from "../interfaces/User";
+import { UserContext as userContext } from "../interfaces/User";
 
-export const UserContext = createContext<User | null>(null);
+export const UserContext = createContext<userContext>({
+  user: null,
+  userLikedPosts: null,
+});

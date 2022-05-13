@@ -7,7 +7,7 @@ import RightContent from "./RightContent";
 type indexProps = {};
 
 const index: React.FC<indexProps> = () => {
-  const user = useContext(UserContext);
+  const userData = useContext(UserContext);
   return (
     <Flex
       height="80px"
@@ -21,7 +21,7 @@ const index: React.FC<indexProps> = () => {
     >
       <Flex width="90%" alignItems="center" justify="space-between" m="0 auto">
         <LeftContent />
-        <RightContent user={user} />
+        <RightContent user={userData.user} />
       </Flex>
     </Flex>
   );
