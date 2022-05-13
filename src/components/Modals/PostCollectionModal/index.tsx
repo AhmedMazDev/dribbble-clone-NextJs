@@ -43,6 +43,7 @@ const index: React.FC<indexProps> = ({
         ) : (
           <SelectCollections
             setIsCreatingCollection={setIsCreatingCollection}
+            setIsOpen={setIsOpen}
             postId={postId}
             postImageURL={postImageURL}
           />

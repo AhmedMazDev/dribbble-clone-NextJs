@@ -14,6 +14,7 @@ export interface User {
 export interface UserContext {
   user: User | null;
   userLikedPosts: UserLikedPosts[] | null;
+  userCollections: Collection[] | null;
 }
 
 export interface UserLikedPosts {

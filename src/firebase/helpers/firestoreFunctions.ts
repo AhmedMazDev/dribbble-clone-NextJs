@@ -1,4 +1,5 @@
 import {
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -12,12 +13,7 @@ import {
 } from "firebase/firestore";
 import { Tag } from "../../interfaces/AppContext";
 import { Collection, CollectionSnap } from "../../interfaces/Collection";
-import { Post, PostCollection, PostSnapshot } from "../../interfaces/Post";
-import {
-  User,
-  UserLikedPosts,
-  UserPostsCollection,
-} from "../../interfaces/User";
+import { Post, PostSnapshot } from "../../interfaces/Post";
 import { db } from "../firebaseConfig";
 
 //Post related Functions
@@ -110,6 +106,21 @@ export const addPostToCollection = async (
   const collectionRef = doc(db, `users/${uid}/collections/${collectionSlug}`);
   const updatedCollection = await updateDoc(collectionRef, {
     posts: arrayUnion({
+      postId,
+      postImageURL: postImageUrl,
+    }),
+  });
+};
+
+export const removePostFromCollection = async (
+  uid: string,
+  postId: string,
+  postImageUrl: string,
+  collectionSlug: string
+) => {
+  const collectionRef = doc(db, `users/${uid}/collections/${collectionSlug}`);
+  const updatedCollection = await updateDoc(collectionRef, {
+    posts: arrayRemove({
       postId,
       postImageURL: postImageUrl,
     }),

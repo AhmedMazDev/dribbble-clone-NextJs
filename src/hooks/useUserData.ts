@@ -11,6 +11,7 @@ import { collectionToJson } from "../firebase/helpers/firestoreFunctions";
 import { auth, db } from "../firebase/firebaseConfig";
 import { Collection, CollectionSnap } from "../interfaces/Collection";
 import { User, UserLikedPosts, UserPostsCollection } from "../interfaces/User";
+import { PostCollection } from "../interfaces/Post";
 
 export function useUserData() {
   const [currentUser] = useAuthState(auth);
@@ -21,7 +22,9 @@ export function useUserData() {
   const [userPostsCollection, setUserPostsCollection] = useState<
     Collection[] | null
   >(null);
-  const [userCollections, setUserCollections] = useState(null);
+  const [userCollections, setUserCollections] = useState<Collection[] | null>(
+    null
+  );
 
   const [userDataRealtime] = useDocumentData(
     doc(db, `users/${currentUser?.uid!}`)
@@ -50,7 +53,15 @@ export function useUserData() {
       return { postId: doc.postId as string } as UserLikedPosts;
     });
     setUserLikedPosts(likedPosts || null);
+    console.log("state userLikedPosts", userLikedPosts);
   }, [userLikedPostsRealtime]);
+
+  useEffect(() => {
+    const collections = userPostsCollectionRealtime?.map((doc) => {
+      return doc as Collection;
+    });
+    setUserCollections((collections as Collection[]) || null);
+  }, [userPostsCollectionRealtime]);
 
   return {
     user,
