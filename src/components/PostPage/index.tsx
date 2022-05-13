@@ -25,6 +25,7 @@ const index: React.FC<indexProps> = ({ post }) => {
         numberOfLikes={post.numberOfLikes}
         postId={post.slug}
         postImageURL={post.imageUrl}
+        postImageName={post.imageName}
       />
       <Image
         src={post.imageUrl}

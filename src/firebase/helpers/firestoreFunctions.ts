@@ -21,6 +21,7 @@ export const createPost = async (
   title: string,
   slug: string,
   imageUrl: string,
+  imageName: string,
   tags: string[],
   username: string,
   userPhoto?: string
@@ -30,6 +31,7 @@ export const createPost = async (
     title,
     slug,
     imageUrl,
+    imageName,
     tags,
     username,
     userPhoto,
@@ -97,34 +99,29 @@ export const createCollection = async (
   });
 };
 
-export const addPostToCollection = async (
+export const addOrRemovePostToCollection = async (
   uid: string,
   postId: string,
   postImageUrl: string,
-  collectionSlug: string
+  collectionSlug: string,
+  isAdding: boolean
 ) => {
   const collectionRef = doc(db, `users/${uid}/collections/${collectionSlug}`);
-  const updatedCollection = await updateDoc(collectionRef, {
-    posts: arrayUnion({
-      postId,
-      postImageURL: postImageUrl,
-    }),
-  });
-};
-
-export const removePostFromCollection = async (
-  uid: string,
-  postId: string,
-  postImageUrl: string,
-  collectionSlug: string
-) => {
-  const collectionRef = doc(db, `users/${uid}/collections/${collectionSlug}`);
-  const updatedCollection = await updateDoc(collectionRef, {
-    posts: arrayRemove({
-      postId,
-      postImageURL: postImageUrl,
-    }),
-  });
+  if (isAdding) {
+    await updateDoc(collectionRef, {
+      posts: arrayUnion({
+        postId,
+        postImageURL: postImageUrl,
+      }),
+    });
+  } else {
+    const updatedCollection = await updateDoc(collectionRef, {
+      posts: arrayRemove({
+        postId,
+        postImageURL: postImageUrl,
+      }),
+    });
+  }
 };
 
 //public functions

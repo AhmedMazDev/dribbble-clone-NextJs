@@ -12,6 +12,7 @@ type PostHeaderProps = {
   userPhoto?: string;
   postId: string;
   postImageURL: string;
+  postImageName: string;
 };
 
 const PostHeader: React.FC<PostHeaderProps> = ({
@@ -19,11 +20,13 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   userPhoto,
   numberOfLikes,
   postId,
+  postImageName,
   postImageURL,
 }) => {
   const { user } = useContext(UserContext);
   const { setShowLoginModal } = useContext(AppContext);
-  const { isLiked, loading, onLikePost, error } = usePost(postId);
+  const { isLiked, loading, onLikePost, onDownloadPost, error } =
+    usePost(postId);
   const toast = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -63,7 +66,15 @@ const PostHeader: React.FC<PostHeaderProps> = ({
         </Text>
       </Flex>
       <Flex align="center" gap={4}>
-        <Icon as={FiDownload} h={8} w={8} cursor="pointer" />
+        <Icon
+          as={FiDownload}
+          h={8}
+          w={8}
+          cursor="pointer"
+          onClick={() => {
+            onDownloadPost(postImageURL, postImageName);
+          }}
+        />
         <Button variant="cancel" color="#3AA4FF" onClick={onSaveClick}>
           Save
         </Button>

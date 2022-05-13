@@ -1,12 +1,9 @@
-import { Flex, Text, Image, Icon, Spinner } from "@chakra-ui/react";
+import { Flex, Text, Image, Icon, Spinner, useToast } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { Collection } from "../../../../interfaces/Collection";
 import { BsCheckLg } from "react-icons/bs";
-import {
-  addPostToCollection,
-  removePostFromCollection,
-} from "../../../../firebase/helpers/firestoreFunctions";
 import { UserContext } from "../../../../context/userContext";
+import usePost from "../../../../hooks/usePost";
 
 type CollectionProps = {
   collection: Collection;
@@ -19,10 +16,10 @@ const Collection: React.FC<CollectionProps> = ({
   postId,
   postImageURL,
 }) => {
-  const { user } = useContext(UserContext);
+  const toast = useToast();
+  const { onSavePost, loadingSave, saveError } = usePost(postId);
   const [isCollectionContainsPost, setIsCollectionContainsPost] =
     useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (
@@ -32,36 +29,23 @@ const Collection: React.FC<CollectionProps> = ({
     } else {
       setIsCollectionContainsPost(false);
     }
-    console.log("exist", isCollectionContainsPost);
   }, [collection]);
 
-  const onCollectionSelect = async () => {
-    setLoading(true);
-    try {
-      if (!isCollectionContainsPost) {
-        await addPostToCollection(
-          user?.uid!,
-          postId,
-          postImageURL,
-          collection.slug
-        );
-      } else {
-        await removePostFromCollection(
-          user?.uid!,
-          postId,
-          postImageURL,
-          collection.slug
-        );
-      }
-    } catch (error) {
-      console.log("collection error", error);
+  useEffect(() => {
+    if (saveError) {
+      toast({
+        title: "Error",
+        description: "There was an error saving the post to the collection",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
-    setLoading(false);
-  };
+  }, [saveError]);
 
   return (
     <>
-      {loading ? (
+      {loadingSave ? (
         <Spinner thickness="4px" />
       ) : (
         <Flex
@@ -78,7 +62,9 @@ const Collection: React.FC<CollectionProps> = ({
           _hover={{
             bg: "gray.100",
           }}
-          onClick={onCollectionSelect}
+          onClick={() => {
+            onSavePost(collection, postImageURL, !isCollectionContainsPost);
+          }}
         >
           <Flex gap={4}>
             <Image

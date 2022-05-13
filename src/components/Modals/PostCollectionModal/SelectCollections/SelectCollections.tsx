@@ -43,8 +43,6 @@ const SelectCollections: React.FC<SelectCollectionsProps> = ({
     setCollections(filteredCollections!);
   };
 
-  console.log("select collections", userCollections);
-
   return (
     <>
       <ModalHeader>Add Post To a Collection</ModalHeader>

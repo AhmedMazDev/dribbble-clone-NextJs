@@ -4,6 +4,7 @@ export interface IPost {
   title: string;
   slug: string;
   imageUrl: string;
+  imageName: string;
   tags: string[];
   numberOfLikes: number;
   username: string;
