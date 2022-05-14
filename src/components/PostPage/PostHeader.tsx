@@ -24,18 +24,24 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   postImageURL,
 }) => {
   const { user } = useContext(UserContext);
-  const { setShowLoginModal } = useContext(AppContext);
+  const {
+    setShowLoginModal,
+    setShowCollectionModal,
+    setPostId,
+    setPostImageURL,
+  } = useContext(AppContext);
   const { isLiked, loading, onLikePost, onDownloadPost, error } =
     usePost(postId);
   const toast = useToast();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSaveClick = async () => {
     if (!user) {
       setShowLoginModal(true);
       return;
     }
-    setIsModalOpen(true);
+    setShowCollectionModal(true);
+    setPostId(postId);
+    setPostImageURL(postImageURL);
   };
 
   useEffect(() => {
@@ -52,12 +58,6 @@ const PostHeader: React.FC<PostHeaderProps> = ({
 
   return (
     <Flex align="center" justify="space-between" gap={4} w="100%">
-      <PostCollectionModal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-        postId={postId}
-        postImageURL={postImageURL}
-      />
       <Flex cursor="pointer" align="center" justify="center" gap={4}>
         <Avatar src={userPhoto} />
 

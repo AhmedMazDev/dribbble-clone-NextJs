@@ -14,20 +14,21 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../../context/userContext";
 import { createCollection } from "../../../firebase/helpers/firestoreFunctions";
 import { User } from "../../../interfaces/User";
 
 type CreateNewCollectionProps = {
   setIsCreatingCollection: (value: boolean) => void;
-  user: User | null;
 };
 
 const CreateNewCollection: React.FC<CreateNewCollectionProps> = ({
   setIsCreatingCollection,
-  user,
 }) => {
+  const { user } = useContext(UserContext);
   const toast = useToast();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [nameCharacters, setNameCharacters] = useState(15);

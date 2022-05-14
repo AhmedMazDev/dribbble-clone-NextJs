@@ -11,7 +11,10 @@ const AppContextProvider: React.FC<AppContextProviderProps> = ({
   children,
 }) => {
   const [tags, setTags] = useState<Tag[]>([]);
+  const [postId, setPostId] = useState<string>("");
+  const [postImageURL, setPostImageURL] = useState<string>("");
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showCollectionModal, setShowCollectionModal] = useState(false);
 
   useEffect(() => {
     const getTagsFromFirestore = async () => {
@@ -24,7 +27,18 @@ const AppContextProvider: React.FC<AppContextProviderProps> = ({
 
   return (
     <AppContext.Provider
-      value={{ tags, showLoginModal, setTags, setShowLoginModal }}
+      value={{
+        tags,
+        showLoginModal,
+        setTags,
+        postImageURL,
+        postId,
+        setShowLoginModal,
+        showCollectionModal,
+        setShowCollectionModal,
+        setPostId,
+        setPostImageURL,
+      }}
     >
       {children}
     </AppContext.Provider>

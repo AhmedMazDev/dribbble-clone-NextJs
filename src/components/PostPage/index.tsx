@@ -1,5 +1,6 @@
 import { Flex, Image } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../context/AppContext/appContext";
 import { Post } from "../../interfaces/Post";
 import PostHeader from "./PostHeader";
 

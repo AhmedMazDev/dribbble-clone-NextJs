@@ -2,16 +2,12 @@ import { collection, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
-  useCollection,
   useCollectionData,
-  useCollectionDataOnce,
   useDocumentData,
 } from "react-firebase-hooks/firestore";
-import { collectionToJson } from "../firebase/helpers/firestoreFunctions";
 import { auth, db } from "../firebase/firebaseConfig";
-import { Collection, CollectionSnap } from "../interfaces/Collection";
-import { User, UserLikedPosts, UserPostsCollection } from "../interfaces/User";
-import { PostCollection } from "../interfaces/Post";
+import { Collection } from "../interfaces/Collection";
+import { User, UserLikedPosts } from "../interfaces/User";
 
 export function useUserData() {
   const [currentUser] = useAuthState(auth);
@@ -53,7 +49,6 @@ export function useUserData() {
       return { postId: doc.postId as string } as UserLikedPosts;
     });
     setUserLikedPosts(likedPosts || null);
-    console.log("state userLikedPosts", userLikedPosts);
   }, [userLikedPostsRealtime]);
 
   useEffect(() => {

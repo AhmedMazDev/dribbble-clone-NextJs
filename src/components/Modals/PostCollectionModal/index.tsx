@@ -5,45 +5,40 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
-import { UserContext } from "../../../context/userContext";
+import { AppContext } from "../../../context/AppContext/appContext";
 import CreateNewCollection from "./CreateNewCollection";
 import SelectCollections from "./SelectCollections/SelectCollections";
 
-type indexProps = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  postId: string;
-  postImageURL: string;
-};
+type indexProps = {};
 
-const index: React.FC<indexProps> = ({
-  isOpen,
-  setIsOpen,
-  postId,
-  postImageURL,
-}) => {
-  const { user } = useContext(UserContext);
+const index: React.FC<indexProps> = ({}) => {
+  const { showCollectionModal, setShowCollectionModal, postId, postImageURL } =
+    useContext(AppContext);
   const [isCreatingCollection, setIsCreatingCollection] = useState(false);
 
   return (
-    <Modal isOpen={isOpen} onClose={() => {}}>
+    <Modal
+      isOpen={showCollectionModal}
+      onClose={() => {
+        setShowCollectionModal(false);
+      }}
+    >
       <ModalOverlay />
 
       <ModalContent>
         <ModalCloseButton
           onClick={() => {
-            setIsOpen(false);
+            setShowCollectionModal(false);
           }}
         />
         {isCreatingCollection ? (
           <CreateNewCollection
             setIsCreatingCollection={setIsCreatingCollection}
-            user={user}
           />
         ) : (
           <SelectCollections
             setIsCreatingCollection={setIsCreatingCollection}
-            setIsOpen={setIsOpen}
+            setIsOpen={setShowCollectionModal}
             postId={postId}
             postImageURL={postImageURL}
           />

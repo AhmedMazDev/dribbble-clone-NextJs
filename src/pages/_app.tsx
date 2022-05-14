@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { theme } from "../chakra/theme";
 import AuthModal from "../components/Modals/AuthModal";
+import PostCollectionModal from "../components/Modals/PostCollectionModal";
 import Navbar from "../components/Navbar";
 import AppContextProvider from "../context/AppContext/AppContextProvider";
 import { UserContext } from "../context/userContext";
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AppContextProvider>
         <ChakraProvider theme={theme}>
           <AuthModal />
+          <PostCollectionModal />
           {router.pathname !== "/signin" && router.pathname !== "/signup" && (
             <Navbar />
           )}

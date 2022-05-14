@@ -1,17 +1,28 @@
-import { Heading } from "@chakra-ui/react";
-import type { NextPage } from "next";
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext/appContext";
-import { UserContext } from "../context/userContext";
+import { Flex, Grid } from "@chakra-ui/react";
+import type { GetServerSideProps, NextPage } from "next";
+import PostList from "../components/PostsList";
+import { getLatestPosts } from "../firebase/helpers/firestoreFunctions";
+import { Post } from "../interfaces/Post";
 
-const Home: NextPage = () => {
-  const userData = useContext(UserContext);
+export const getServerSideProps: GetServerSideProps = async () => {
+  const posts = await getLatestPosts();
+  return {
+    props: {
+      posts,
+    },
+  };
+};
 
+type Props = {
+  posts: Post[];
+};
+
+const Home: NextPage<Props> = ({ posts }) => {
   return (
     <>
-      <Heading fontSize={500}>Hello</Heading>
-      <Heading fontSize={500}>Hello</Heading>
-      {userData.user && <div>{JSON.stringify(userData.user)}</div>}
+      <Flex w="95%" m="0 auto">
+        <PostList posts={posts} />
+      </Flex>
     </>
   );
 };

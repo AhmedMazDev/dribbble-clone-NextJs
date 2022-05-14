@@ -6,6 +6,9 @@ import {
   getDoc,
   getDocs,
   increment,
+  limit,
+  orderBy,
+  query,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -68,6 +71,12 @@ export const likeOrUnlikePost = async (
     batch.update(postRef, { numberOfLikes: increment(-1) });
   }
   await batch.commit();
+};
+
+export const getLatestPosts = async (): Promise<Post[]> => {
+  const q = query(collection(db, "posts"), orderBy("createdAt"), limit(20));
+  const postsSnap = await getDocs(q);
+  return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
 };
 
 //Tags related functions

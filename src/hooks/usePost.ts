@@ -49,6 +49,7 @@ const usePost = (postId: string) => {
       setShowLoginModal(true);
       return;
     }
+
     try {
       setLoadingSave(true);
       await addOrRemovePostToCollection(
