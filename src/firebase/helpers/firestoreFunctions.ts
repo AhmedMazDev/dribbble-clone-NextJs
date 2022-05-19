@@ -133,6 +133,27 @@ export const getUserCollectionsByUID = async (
     : [];
 };
 
+export const getUserLikedPostsByUID = async (
+  uid: string
+): Promise<Post[] | []> => {
+  const userLikedPostsRef = collection(db, `users/${uid}/likedPosts`);
+  const userLikedPostsSnap = await getDocs(userLikedPostsRef);
+
+  const userLikedPostsSlugs = userLikedPostsSnap.docs.map((doc) => doc.id);
+
+  if (userLikedPostsSlugs.length === 0) return [];
+
+  const q = query(
+    collection(db, "posts"),
+    where("slug", "in", userLikedPostsSlugs)
+  );
+  const postsSnap = await getDocs(q);
+  const posts = postsSnap.docs.map((post) =>
+    postToJson(post.data() as PostSnapshot)
+  );
+  return posts.length > 0 ? posts : [];
+};
+
 //Collections related functions
 export const createCollection = async (
   uid: string,

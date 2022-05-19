@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getUserCollectionsByUID } from "../../../firebase/helpers/firestoreFunctions";
 import { Collection } from "../../../interfaces/Collection";
@@ -21,11 +21,20 @@ const index: React.FC<indexProps> = ({ user }) => {
       getUserCollections();
     }
   }, [user]);
+
+  if (!userCollections.length) {
+    return (
+      <>
+        <Text>this user has no Collections</Text>
+      </>
+    );
+  }
+
   return (
     <>
       <Grid
-        gridTemplateColumns="repeat(auto-fill,minmax(270px,1fr))"
-        columnGap={4}
+        gridTemplateColumns="repeat(auto-fill, minmax(270px, 1fr))"
+        gridGap={"48px"}
       >
         {userCollections &&
           userCollections.map((collection) => {

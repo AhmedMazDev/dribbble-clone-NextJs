@@ -1,7 +1,6 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import React from "react";
 import { Post } from "../../interfaces/Post";
-import PostCollectionModal from "../Modals/PostCollectionModal";
 import PostItem from "./PostItem";
 
 type indexProps = {
@@ -12,14 +11,11 @@ const index: React.FC<indexProps> = ({ posts }) => {
   return (
     <>
       <Grid
-        templateColumns="repeat(auto-fill,minmax(350px,400px))"
-        columnGap={8}
-        rowGap={8}
+        templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+        gridGap={"36px"}
         mt={8}
-        alignItems="center"
-        justifyContent="center"
         w="100%"
-        gridAutoColumns={"auto"}
+        position={"relative"}
       >
         {posts.map((post) => (
           <PostItem key={post.slug} post={post} />

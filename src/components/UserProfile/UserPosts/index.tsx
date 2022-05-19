@@ -3,6 +3,7 @@ import { getUserPostsByUsername } from "../../../firebase/helpers/firestoreFunct
 import { Post } from "../../../interfaces/Post";
 import { User } from "../../../interfaces/User";
 import PostsList from "../../PostsList";
+import { Text } from "@chakra-ui/react";
 
 type indexProps = {
   user: User;
@@ -20,6 +21,14 @@ const index: React.FC<indexProps> = ({ user }) => {
       getUserPosts();
     }
   }, [user]);
+
+  if (!userPosts.length) {
+    return (
+      <>
+        <Text>this user has no posts</Text>
+      </>
+    );
+  }
 
   return (
     <>

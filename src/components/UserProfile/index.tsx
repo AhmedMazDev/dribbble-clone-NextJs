@@ -11,6 +11,7 @@ import React from "react";
 import { User } from "../../interfaces/User";
 import UserCollections from "./UserCollections";
 import UserDetails from "./UserDetails";
+import UserLikedPosts from "./UserLikedPosts";
 import UserPosts from "./UserPosts";
 
 type indexProps = {
@@ -55,7 +56,9 @@ const index: React.FC<indexProps> = ({ user }) => {
           <TabPanel>
             <UserCollections user={user} />
           </TabPanel>
-          <TabPanel>{/* <UserLikedPosts /> */}</TabPanel>
+          <TabPanel>
+            <UserLikedPosts user={user} />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Flex>
