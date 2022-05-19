@@ -154,6 +154,13 @@ export const getUserLikedPostsByUID = async (
   return posts.length > 0 ? posts : [];
 };
 
+export const updateUserProfile = async (
+  user: Omit<User, "email" | "username" | "createdAt">
+): Promise<void> => {
+  const userRef = doc(db, `users/${user.uid}`);
+  await updateDoc(userRef, user);
+};
+
 //Collections related functions
 export const createCollection = async (
   uid: string,

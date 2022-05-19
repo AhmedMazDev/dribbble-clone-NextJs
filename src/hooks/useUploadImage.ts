@@ -11,13 +11,18 @@ const useUploadImage = () => {
     image: File,
     imageName: string,
     uid: string,
-    slug: string
+    slug?: string
   ) => {
     setLoading(true);
     const metadata = {
       contentType: "image/jpeg, image/png, image/jpg, image/gif",
     };
-    const imageRef = ref(storage, `posts/${uid}/${slug}/${imageName}`);
+    let imageRef;
+    if (slug) {
+      imageRef = ref(storage, `posts/${uid}/${slug}/${imageName}`);
+    } else {
+      imageRef = ref(storage, `users/${uid}/${imageName}`);
+    }
     const uploadTask = uploadBytesResumable(imageRef, image, metadata);
     uploadTask.on(
       "state_changed",

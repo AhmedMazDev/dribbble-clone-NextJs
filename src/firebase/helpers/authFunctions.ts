@@ -26,6 +26,7 @@ export const createUserWithEmail = async (
     photoUrl: createdUser.user.photoURL || "",
     bio: "",
     location: "",
+    createdAt: Date.now(),
   });
 };
 
@@ -39,6 +40,7 @@ export const createUserWithGoogle = async () => {
     photoUrl: createdUser.user.photoURL || "",
     bio: "",
     location: "",
+    createdAt: Date.now(),
   });
 };
 
@@ -54,6 +56,7 @@ export const signUserWithGoogle = async () => {
       photoUrl: createdUser.user.photoURL || "",
       bio: "",
       location: "",
+      createdAt: Date.now(),
     });
   }
 };
@@ -62,7 +65,10 @@ export const signUserInWithEmail = async (email: string, password: string) => {
   const user = await signInWithEmailAndPassword(auth, email, password);
 };
 
-export const addUserToFirestore = async (userID: string, user: User) => {
+export const addUserToFirestore = async (
+  userID: string,
+  user: Omit<User, "uid">
+) => {
   await setDoc(doc(db, "users", userID), user);
   const usersRef = doc(db, "users", userID);
   const usernamesRef = doc(db, "usernames", user.username);

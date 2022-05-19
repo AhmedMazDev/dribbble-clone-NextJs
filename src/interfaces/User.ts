@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { Collection } from "./Collection";
 import { PostCollection } from "./Post";
 
@@ -9,6 +10,7 @@ export interface User {
   photoUrl?: string;
   bio?: string;
   location?: string;
+  createdAt: number;
 }
 
 export interface UserContext {

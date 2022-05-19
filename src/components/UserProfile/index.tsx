@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { User } from "../../interfaces/User";
+import UserAbout from "./UserAbout";
 import UserCollections from "./UserCollections";
 import UserDetails from "./UserDetails";
 import UserLikedPosts from "./UserLikedPosts";
@@ -48,6 +49,14 @@ const index: React.FC<indexProps> = ({ user }) => {
           >
             Liked Posts
           </Tab>
+          <Tab
+            _focus={{
+              outline: "none",
+              boxShadow: "none",
+            }}
+          >
+            About
+          </Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -58,6 +67,9 @@ const index: React.FC<indexProps> = ({ user }) => {
           </TabPanel>
           <TabPanel>
             <UserLikedPosts user={user} />
+          </TabPanel>
+          <TabPanel>
+            <UserAbout user={user} />
           </TabPanel>
         </TabPanels>
       </Tabs>

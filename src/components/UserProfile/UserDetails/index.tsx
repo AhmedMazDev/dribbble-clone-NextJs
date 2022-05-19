@@ -1,4 +1,5 @@
 import { Avatar, Button, Flex, Image, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { UserContext } from "../../../context/userContext";
 import { User } from "../../../interfaces/User";
@@ -9,6 +10,7 @@ type indexProps = {
 
 const index: React.FC<indexProps> = ({ user }) => {
   const { user: userData } = useContext(UserContext);
+  const router = useRouter();
   return (
     <Flex align="center" justify="center" width="100%" gap={4}>
       <Avatar src={user.photoUrl} size="xl" />
@@ -25,6 +27,9 @@ const index: React.FC<indexProps> = ({ user }) => {
               border="0.5px solid #C4C4C4"
               fontWeight={"medium"}
               _hover={{ bg: "#C4C4C4" }}
+              onClick={() => {
+                router.push(`${user.username}/edit`);
+              }}
             >
               Edit Profile
             </Button>
