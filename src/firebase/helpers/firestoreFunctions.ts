@@ -81,6 +81,18 @@ export const getLatestPosts = async (): Promise<Post[]> => {
   return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
 };
 
+export const getPostsByTag = async (tag: string): Promise<Post[] | null> => {
+  const q = query(
+    collection(db, "posts"),
+    where("tags", "array-contains", tag),
+    orderBy("createdAt"),
+    limit(20)
+  );
+  const postsSnap = await getDocs(q);
+  if (postsSnap.empty) return null;
+  return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
+};
+
 //Tags related functions
 export const getTags = async (): Promise<Tag[]> => {
   const tagsSnap = await getDocs(collection(db, "tags"));
@@ -88,6 +100,12 @@ export const getTags = async (): Promise<Tag[]> => {
     return { label: doc.id, value: doc.data().value as string } as Tag;
   });
   return tags;
+};
+
+export const isTagExist = async (tag: string): Promise<boolean> => {
+  const tagRef = doc(db, `tags/${tag}`);
+  const tagSnap = await getDoc(tagRef);
+  return tagSnap.exists();
 };
 
 //User Related Functions

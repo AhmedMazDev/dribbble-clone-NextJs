@@ -5,6 +5,7 @@ import {
   Heading,
   Image,
   Input,
+  Link,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -292,6 +293,12 @@ const PostDetails: React.FC<PostDetailsProps> = ({
             overflowY: "scroll",
           }}
         />
+        <Text fontSize={20}>
+          Available{" "}
+          <Link href="/tags" color="buttonColor">
+            Tags
+          </Link>
+        </Text>
       </Flex>
       <Flex justifyContent="center" gap={8}>
         <Button onClick={onCreatePost} isLoading={loading}>
