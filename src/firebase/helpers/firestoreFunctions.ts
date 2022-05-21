@@ -29,6 +29,7 @@ export const createPost = async (
   imageName: string,
   tags: string[],
   username: string,
+  userDisplayName: string,
   userPhoto?: string
 ) => {
   const postRef = doc(db, `posts/${slug}`);
@@ -39,6 +40,7 @@ export const createPost = async (
     imageName,
     tags,
     username,
+    userDisplayName,
     userPhoto,
     numberOfLikes: 0,
     createdAt: serverTimestamp(),
@@ -90,6 +92,34 @@ export const getPostsByTag = async (tag: string): Promise<Post[] | null> => {
   );
   const postsSnap = await getDocs(q);
   if (postsSnap.empty) return null;
+  return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
+};
+
+export const getPostsByUserName = async (
+  username: string
+): Promise<Post[] | []> => {
+  const q = query(
+    collection(db, "posts"),
+    where("username", "==", username),
+    orderBy("createdAt"),
+    limit(3)
+  );
+  const postsSnap = await getDocs(q);
+  if (postsSnap.empty) return [];
+  return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
+};
+
+export const getSimilarPosts = async (
+  postTags: string[]
+): Promise<Post[] | []> => {
+  const q = query(
+    collection(db, "posts"),
+    where("tags", "array-contains-any", postTags),
+    orderBy("createdAt"),
+    limit(6)
+  );
+  const postsSnap = await getDocs(q);
+  if (postsSnap.empty) return [];
   return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
 };
 

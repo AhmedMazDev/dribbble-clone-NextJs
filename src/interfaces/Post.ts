@@ -8,6 +8,7 @@ export interface IPost {
   tags: string[];
   numberOfLikes: number;
   username: string;
+  userDisplayName: string;
   userPhoto?: string;
 }
 

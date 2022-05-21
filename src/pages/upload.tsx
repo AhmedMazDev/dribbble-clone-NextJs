@@ -208,6 +208,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({
         imageURL,
         imageName,
         tags.map((tag) => tag.value),
+        userData.user?.username!,
         userData.user?.displayName!,
         userData.user?.photoUrl
       );

@@ -2,6 +2,7 @@ import { Grid } from "@chakra-ui/react";
 import React from "react";
 import { Post } from "../../interfaces/Post";
 import PostItem from "./PostItem";
+import PostListSkeleton from "./PostSkeleton";
 
 type indexProps = {
   posts: Post[];

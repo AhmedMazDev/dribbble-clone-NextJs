@@ -2,6 +2,7 @@ import { Flex, Image } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { AppContext } from "../../context/AppContext/appContext";
 import { Post } from "../../interfaces/Post";
+import PostExtras from "./PostExtras";
 import PostHeader from "./PostHeader";
 
 type indexProps = {
@@ -16,11 +17,12 @@ const index: React.FC<indexProps> = ({ post }) => {
       justify="space-between"
       mt={8}
       w="80%"
-      maxWidth="900px"
+      // maxWidth="900px"
       mx="auto"
       gap={8}
     >
       <PostHeader
+        userDisplayName={post.userDisplayName}
         username={post.username}
         userPhoto={post.userPhoto}
         numberOfLikes={post.numberOfLikes}
@@ -36,6 +38,7 @@ const index: React.FC<indexProps> = ({ post }) => {
         maxHeight="670px"
         maxWidth="900px"
       />
+      <PostExtras post={post} />
     </Flex>
   );
 };

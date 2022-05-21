@@ -1,21 +1,9 @@
+import { Flex, Spinner, Text } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
-import {
-  Avatar,
-  Button,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-  Input,
-  Spinner,
-  Text,
-  Textarea,
-} from "@chakra-ui/react";
-import { UserContext } from "../../context/userContext";
 import EditProfileForm from "../../components/UserProfile/EditProfileForm";
+import { UserContext } from "../../context/userContext";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { username } = context.query;
@@ -30,7 +18,7 @@ type Props = {
   username: string;
 };
 
-const edit: NextPage<Props> = ({ username }) => {
+const edit: React.FC<Props> = ({ username }) => {
   const { user } = useContext(UserContext);
   const router = useRouter();
 

@@ -1,4 +1,5 @@
 import { Avatar, Button, Flex, Icon, Text, useToast } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
@@ -9,6 +10,7 @@ import PostCollectionModal from "../Modals/PostCollectionModal";
 type PostHeaderProps = {
   numberOfLikes: number;
   username: string;
+  userDisplayName: string;
   userPhoto?: string;
   postId: string;
   postImageURL: string;
@@ -17,12 +19,14 @@ type PostHeaderProps = {
 
 const PostHeader: React.FC<PostHeaderProps> = ({
   username,
+  userDisplayName,
   userPhoto,
   numberOfLikes,
   postId,
   postImageName,
   postImageURL,
 }) => {
+  const router = useRouter();
   const { user } = useContext(UserContext);
   const {
     setShowLoginModal,
@@ -57,12 +61,26 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   }, [error]);
 
   return (
-    <Flex align="center" justify="space-between" gap={4} w="100%">
-      <Flex cursor="pointer" align="center" justify="center" gap={4}>
+    <Flex
+      align="center"
+      justify="space-between"
+      gap={4}
+      w="100%"
+      maxWidth="900px"
+    >
+      <Flex
+        cursor="pointer"
+        align="center"
+        justify="center"
+        gap={4}
+        onClick={() => {
+          router.push(`/${username}`);
+        }}
+      >
         <Avatar src={userPhoto} />
 
         <Text fontSize={24} fontWeight="medium" display={["none", "unset"]}>
-          {username}
+          {userDisplayName}
         </Text>
       </Flex>
       <Flex align="center" gap={4}>
