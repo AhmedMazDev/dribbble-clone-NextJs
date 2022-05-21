@@ -9,7 +9,7 @@ type indexProps = {
   user: User;
 };
 
-const index: React.FC<indexProps> = ({ user }) => {
+const Index: React.FC<indexProps> = ({ user }) => {
   const [userLikedPosts, setUserLikedPosts] = useState<Post[]>([]);
 
   useEffect(() => {
@@ -32,4 +32,4 @@ const index: React.FC<indexProps> = ({ user }) => {
 
   return <>{userLikedPosts && <PostsList posts={userLikedPosts} />}</>;
 };
-export default index;
+export default Index;
