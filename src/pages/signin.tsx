@@ -26,7 +26,7 @@ import {
   signUserWithGoogle,
 } from "../firebase/helpers/authFunctions";
 
-const signin: React.FC = () => {
+const Signin: React.FC = () => {
   const router = useRouter();
   const userData = useContext(UserContext);
 
@@ -47,7 +47,7 @@ const signin: React.FC = () => {
     />
   );
 };
-export default signin;
+export default Signin;
 
 const schema = Joi.object({
   email: Joi.string()

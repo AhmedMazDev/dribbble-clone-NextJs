@@ -18,7 +18,7 @@ type Props = {
   username: string;
 };
 
-const edit: React.FC<Props> = ({ username }) => {
+const Edit: React.FC<Props> = ({ username }) => {
   const { user } = useContext(UserContext);
   const router = useRouter();
 
@@ -67,4 +67,4 @@ const edit: React.FC<Props> = ({ username }) => {
     </Flex>
   );
 };
-export default edit;
+export default Edit;

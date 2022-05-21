@@ -31,7 +31,7 @@ import {
   isUserNameExists,
 } from "../firebase/helpers/authFunctions";
 
-const signup: React.FC = () => {
+const Signup: React.FC = () => {
   const router = useRouter();
   const userData = useContext(UserContext);
 
@@ -51,7 +51,7 @@ const signup: React.FC = () => {
     />
   );
 };
-export default signup;
+export default Signup;
 
 const schema = Joi.object({
   username: Joi.string().required().alphanum().min(3).max(15).label("Username"),
