@@ -8,7 +8,7 @@ type indexProps = {
   posts: Post[];
 };
 
-const index: React.FC<indexProps> = ({ posts }) => {
+const Index: React.FC<indexProps> = ({ posts }) => {
   return (
     <>
       <Grid
@@ -25,4 +25,4 @@ const index: React.FC<indexProps> = ({ posts }) => {
     </>
   );
 };
-export default index;
+export default Index;

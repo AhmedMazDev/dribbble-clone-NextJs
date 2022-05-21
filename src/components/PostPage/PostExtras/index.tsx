@@ -9,7 +9,7 @@ type indexProps = {
   post: Post;
 };
 
-const index: React.FC<indexProps> = ({ post }) => {
+const Index: React.FC<indexProps> = ({ post }) => {
   const router = useRouter();
 
   return (
@@ -41,4 +41,4 @@ const index: React.FC<indexProps> = ({ post }) => {
     </Flex>
   );
 };
-export default index;
+export default Index;

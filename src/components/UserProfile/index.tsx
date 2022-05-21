@@ -19,7 +19,7 @@ type indexProps = {
   user: User;
 };
 
-const index: React.FC<indexProps> = ({ user }) => {
+const Index: React.FC<indexProps> = ({ user }) => {
   return (
     <Flex w="90%" m="0 auto" mt={8} direction="column" gap={8}>
       <UserDetails user={user} />
@@ -76,4 +76,4 @@ const index: React.FC<indexProps> = ({ user }) => {
     </Flex>
   );
 };
-export default index;
+export default Index;

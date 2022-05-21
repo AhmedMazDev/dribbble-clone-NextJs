@@ -9,7 +9,7 @@ type indexProps = {
   user: User;
 };
 
-const index: React.FC<indexProps> = ({ user }) => {
+const Index: React.FC<indexProps> = ({ user }) => {
   const [userCollections, setUserCollections] = useState<Collection[]>([]);
   useEffect(() => {
     const getUserCollections = async () => {
@@ -46,4 +46,4 @@ const index: React.FC<indexProps> = ({ user }) => {
     </>
   );
 };
-export default index;
+export default Index;

@@ -6,7 +6,7 @@ type indexProps = {
   collection: Collection;
 };
 
-const index: React.FC<indexProps> = ({ collection }) => {
+const Index: React.FC<indexProps> = ({ collection }) => {
   return (
     <Flex direction="column" cursor="pointer">
       <Box position="relative" w="100%" pb="100%">
@@ -77,4 +77,4 @@ const index: React.FC<indexProps> = ({ collection }) => {
     </Flex>
   );
 };
-export default index;
+export default Index;

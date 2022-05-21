@@ -7,7 +7,7 @@ import { Tag } from "../../interfaces/AppContext";
 import { Dictionary } from "lodash";
 import { useRouter } from "next/router";
 
-const index: NextPage = () => {
+const Index: NextPage = () => {
   const router = useRouter();
   const { tags } = useContext(AppContext);
   const [tagsList, setTagsList] = useState<Dictionary<Tag[]>>();
@@ -74,4 +74,4 @@ const index: NextPage = () => {
     </>
   );
 };
-export default index;
+export default Index;

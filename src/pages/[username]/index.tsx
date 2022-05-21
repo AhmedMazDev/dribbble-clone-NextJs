@@ -27,11 +27,11 @@ type Props = {
   user: User;
 };
 
-const index: NextPage<Props> = ({ user }) => {
+const Index: NextPage<Props> = ({ user }) => {
   return (
     <>
       <UserProfile user={user} />
     </>
   );
 };
-export default index;
+export default Index;

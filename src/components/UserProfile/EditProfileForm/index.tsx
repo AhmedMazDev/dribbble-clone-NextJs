@@ -22,7 +22,7 @@ type indexProps = {
   user: User;
 };
 
-const index: React.FC<indexProps> = ({ user }) => {
+const Index: React.FC<indexProps> = ({ user }) => {
   const toast = useToast();
   const router = useRouter();
   const {
@@ -253,4 +253,4 @@ const index: React.FC<indexProps> = ({ user }) => {
     </>
   );
 };
-export default index;
+export default Index;

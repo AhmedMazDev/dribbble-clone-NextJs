@@ -6,7 +6,7 @@ import RightContent from "./RightContent";
 
 type indexProps = {};
 
-const index: React.FC<indexProps> = () => {
+const Index: React.FC<indexProps> = () => {
   const userData = useContext(UserContext);
   return (
     <Flex
@@ -26,4 +26,4 @@ const index: React.FC<indexProps> = () => {
     </Flex>
   );
 };
-export default index;
+export default Index;

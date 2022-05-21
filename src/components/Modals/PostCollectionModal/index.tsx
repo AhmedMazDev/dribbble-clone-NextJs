@@ -11,7 +11,7 @@ import SelectCollections from "./SelectCollections/SelectCollections";
 
 type indexProps = {};
 
-const index: React.FC<indexProps> = ({}) => {
+const Index: React.FC<indexProps> = ({}) => {
   const { showCollectionModal, setShowCollectionModal, postId, postImageURL } =
     useContext(AppContext);
   const [isCreatingCollection, setIsCreatingCollection] = useState(false);
@@ -47,4 +47,4 @@ const index: React.FC<indexProps> = ({}) => {
     </Modal>
   );
 };
-export default index;
+export default Index;

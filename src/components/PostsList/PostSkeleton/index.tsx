@@ -10,7 +10,7 @@ import React from "react";
 
 type indexProps = {};
 
-const index: React.FC<indexProps> = () => {
+const Index: React.FC<indexProps> = () => {
   return (
     <Flex direction="column" h="300px">
       <Box h="75%">
@@ -23,4 +23,4 @@ const index: React.FC<indexProps> = () => {
     </Flex>
   );
 };
-export default index;
+export default Index;

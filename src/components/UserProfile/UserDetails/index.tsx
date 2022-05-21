@@ -8,7 +8,7 @@ type indexProps = {
   user: User;
 };
 
-const index: React.FC<indexProps> = ({ user }) => {
+const Index: React.FC<indexProps> = ({ user }) => {
   const { user: userData } = useContext(UserContext);
   const router = useRouter();
   return (
@@ -39,4 +39,4 @@ const index: React.FC<indexProps> = ({ user }) => {
     </Flex>
   );
 };
-export default index;
+export default Index;
