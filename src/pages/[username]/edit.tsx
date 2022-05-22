@@ -24,7 +24,7 @@ const Edit: React.FC<Props> = ({ username }) => {
 
   useEffect(() => {
     if (!user || user.username !== username) {
-      //   router.push("/");
+      router.push("/");
     }
   }, [user]);
 
