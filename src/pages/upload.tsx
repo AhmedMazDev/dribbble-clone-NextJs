@@ -23,7 +23,7 @@ import { Tag } from "../interfaces/AppContext";
 
 type uploadProps = {};
 
-const upload: React.FC<uploadProps> = () => {
+const Upload: React.FC<uploadProps> = () => {
   const [imageConfirmed, setImageConfirmed] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -51,7 +51,7 @@ const upload: React.FC<uploadProps> = () => {
     </Flex>
   );
 };
-export default upload;
+export default Upload;
 
 type SelectImageProps = {
   setImageConfirmed: (value: boolean) => void;

@@ -14,6 +14,7 @@ import {
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 import debounce from "lodash.debounce";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -31,7 +32,7 @@ import {
   isUserNameExists,
 } from "../firebase/helpers/authFunctions";
 
-const Signup: React.FC = () => {
+const Signup: NextPage = () => {
   const router = useRouter();
   const userData = useContext(UserContext);
 
@@ -41,14 +42,17 @@ const Signup: React.FC = () => {
     }
   }, [userData.user]);
   return (
-    <AuthPageLayout
-      form={<SignUpForm />}
-      navLinkText="Sign In"
-      navLinkURL="signin"
-      navText="Already a member?"
-      sideImage="signupCover.png"
-      title="Welcome to Inspiry"
-    />
+    <>
+      <AuthPageLayout
+        navLinkText="Sign In"
+        navLinkURL="signin"
+        navText="Already a member?"
+        sideImage="signupCover.png"
+        title="Welcome to Inspiry"
+      >
+        <SignUpForm />
+      </AuthPageLayout>
+    </>
   );
 };
 export default Signup;
@@ -174,10 +178,9 @@ function SignUpForm() {
           <FormControl isInvalid={errors.username} mr={4}>
             <FormLabel>Username : </FormLabel>
             <InputGroup>
-              <InputLeftElement
-                pointerEvents="none"
-                children={<Icon as={BiUser} w={6} h={6} />}
-              />
+              <InputLeftElement pointerEvents="none">
+                <Icon as={BiUser} w={6} h={6} />
+              </InputLeftElement>
               <Input
                 id="username"
                 type="text"
@@ -205,10 +208,9 @@ function SignUpForm() {
           <FormControl isInvalid={errors.name} mt={{ base: 8, md: 0 }}>
             <FormLabel>Name : </FormLabel>
             <InputGroup>
-              <InputLeftElement
-                pointerEvents="none"
-                children={<Icon as={FiUsers} w={6} h={6} />}
-              />
+              <InputLeftElement pointerEvents="none">
+                <Icon as={FiUsers} w={6} h={6} />
+              </InputLeftElement>
               <Input
                 id="name"
                 type="text"
@@ -234,10 +236,9 @@ function SignUpForm() {
               lg: "80%",
             }}
           >
-            <InputLeftElement
-              pointerEvents="none"
-              children={<Icon as={AiOutlineMail} w={6} h={6} />}
-            />
+            <InputLeftElement pointerEvents="none">
+              <Icon as={AiOutlineMail} w={6} h={6} />
+            </InputLeftElement>
             <Input
               type="email"
               placeholder="abc123@email.com"
@@ -259,10 +260,9 @@ function SignUpForm() {
               lg: "80%",
             }}
           >
-            <InputLeftElement
-              pointerEvents="none"
-              children={<Icon as={RiLockPasswordLine} w={6} h={6} />}
-            />
+            <InputLeftElement pointerEvents="none">
+              <Icon as={RiLockPasswordLine} w={6} h={6} />
+            </InputLeftElement>
             <Input
               type="password"
               placeholder="******"
@@ -284,10 +284,9 @@ function SignUpForm() {
               lg: "80%",
             }}
           >
-            <InputLeftElement
-              pointerEvents="none"
-              children={<Icon as={RiLockPasswordLine} w={6} h={6} />}
-            />
+            <InputLeftElement pointerEvents="none">
+              <Icon as={RiLockPasswordLine} w={6} h={6} />
+            </InputLeftElement>
             <Input
               type="password"
               placeholder="******"

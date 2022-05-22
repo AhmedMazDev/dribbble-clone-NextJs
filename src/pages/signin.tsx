@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -26,7 +27,7 @@ import {
   signUserWithGoogle,
 } from "../firebase/helpers/authFunctions";
 
-const Signin: React.FC = () => {
+const Signin: NextPage = () => {
   const router = useRouter();
   const userData = useContext(UserContext);
 
@@ -37,14 +38,19 @@ const Signin: React.FC = () => {
   }, [userData.user]);
 
   return (
-    <AuthPageLayout
-      title="Welcome Back to Inspiry"
-      form={<SignInForm />}
-      navText="Not a member yet ?"
-      navLinkText="Sign Up"
-      navLinkURL="signup"
-      sideImage="signinCover.png"
-    />
+    <>
+      <AuthPageLayout
+        title="Welcome Back to Inspiry"
+        navText="Not a member yet ?"
+        navLinkText="Sign Up"
+        navLinkURL="signup"
+        sideImage="signinCover.png"
+      >
+        <>
+          <SignInForm />
+        </>
+      </AuthPageLayout>
+    </>
   );
 };
 export default Signin;
@@ -136,10 +142,9 @@ const SignInForm: React.FC = () => {
               lg: "80%",
             }}
           >
-            <InputLeftElement
-              pointerEvents="none"
-              children={<Icon as={AiOutlineMail} w={6} h={6} />}
-            />
+            <InputLeftElement pointerEvents="none">
+              <Icon as={AiOutlineMail} w={6} h={6} />
+            </InputLeftElement>
             <Input
               type="email"
               placeholder="abc123@email.com"
@@ -161,10 +166,9 @@ const SignInForm: React.FC = () => {
               lg: "80%",
             }}
           >
-            <InputLeftElement
-              pointerEvents="none"
-              children={<Icon as={RiLockPasswordLine} w={6} h={6} />}
-            />
+            <InputLeftElement pointerEvents="none">
+              <Icon as={RiLockPasswordLine} w={6} h={6} />
+            </InputLeftElement>
             <Input
               type="password"
               placeholder="******"

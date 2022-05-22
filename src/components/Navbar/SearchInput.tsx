@@ -8,10 +8,9 @@ const SearchInput: React.FC<SearchInputProps> = () => {
   return (
     <>
       <InputGroup display={{ base: "none", md: "unset" }} mr={4}>
-        <InputLeftElement
-          pointerEvents="none"
-          children={<SearchIcon color="gray.300" />}
-        />
+        <InputLeftElement pointerEvents="none">
+          <SearchIcon color="gray.300" />
+        </InputLeftElement>
         <Input type="text" placeholder="Search" width="80%" />
       </InputGroup>
       <SearchIcon

@@ -9,16 +9,16 @@ type AuthPageLayoutProps = {
   navLinkURL: string;
   title: string;
   sideImage: string;
-  form: React.ReactNode;
+  children: ReactNode;
 };
 
 const AuthPageLayout: React.FC<AuthPageLayoutProps> = ({
+  children,
   sideImage,
   navLinkText,
   navLinkURL,
   navText,
   title,
-  form,
 }) => {
   const router = useRouter();
   return (
@@ -68,7 +68,7 @@ const AuthPageLayout: React.FC<AuthPageLayoutProps> = ({
         >
           {title}
         </Heading>
-        {form}
+        {children}
       </Flex>
     </Flex>
   );
