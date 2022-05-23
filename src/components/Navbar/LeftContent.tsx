@@ -14,8 +14,11 @@ const LeftContent: React.FC<LeftContentProps> = () => {
       }}
       cursor="pointer"
     >
-      <Image src="/logo.png" alt="logo" mr="6px" height="50px" />
-      <Heading fontWeight="12pt" display={{ base: "none", md: "unset" }}>
+      <Heading
+        fontFamily={"Birthstone Bounce"}
+        fontWeight="bold"
+        fontSize={[30, 40]}
+      >
         Inspiry
       </Heading>
     </Flex>

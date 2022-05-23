@@ -12,7 +12,8 @@ const Index: React.FC<indexProps> = () => {
     <Flex
       height="80px"
       padding="6px 12px"
-      borderBottom={"1px solid #718096"}
+      borderBottom={"1px solid #F3F4F4"}
+      boxShadow="inset 0px -1px 0px #f3f4f4"
       bg="white"
       position="sticky"
       top="0"

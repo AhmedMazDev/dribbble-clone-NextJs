@@ -2,6 +2,7 @@ import {
   arrayRemove,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -17,7 +18,7 @@ import {
 } from "firebase/firestore";
 import { Tag } from "../../interfaces/AppContext";
 import { Collection, CollectionSnap } from "../../interfaces/Collection";
-import { Post, PostSnapshot } from "../../interfaces/Post";
+import { Post, PostCollection, PostSnapshot } from "../../interfaces/Post";
 import { User } from "../../interfaces/User";
 import { db } from "../firebaseConfig";
 
@@ -227,6 +228,24 @@ export const createCollection = async (
   });
 };
 
+export const updatedCollection = async (
+  uid: string,
+  slug: string,
+  name: string,
+  description: string
+) => {
+  const collectionRef = doc(db, `users/${uid}/collections/${slug}`);
+  const collection = await updateDoc(collectionRef, {
+    name,
+    description,
+  });
+};
+
+export const deleteCollection = async (uid: string, slug: string) => {
+  const collectionRef = doc(db, `users/${uid}/collections/${slug}`);
+  await deleteDoc(collectionRef);
+};
+
 export const addOrRemovePostToCollection = async (
   uid: string,
   postId: string,
@@ -250,6 +269,44 @@ export const addOrRemovePostToCollection = async (
       }),
     });
   }
+};
+
+export const getPostsInCollectionBySlug = async (
+  uid: string,
+  slug: string
+): Promise<Post[] | []> => {
+  const collectionRef = doc(db, `users/${uid}/collections/${slug}`);
+  const collectionSnap = await getDoc(collectionRef);
+  if (!collectionSnap.exists()) return [];
+
+  const postSlugs = collectionSnap
+    .data()
+    ?.posts?.map((post: PostCollection) => post.postId);
+
+  const postsQuery = query(
+    collection(db, "posts"),
+    where("slug", "in", postSlugs),
+    orderBy("createdAt"),
+    limit(20)
+  );
+
+  const postsSnap = await getDocs(postsQuery);
+  return postsSnap.docs.length > 0
+    ? postsSnap.docs.map((post) => {
+        return postToJson(post.data() as PostSnapshot);
+      })
+    : [];
+};
+
+export const getCollectionBySlug = async (
+  uid: string,
+  slug: string
+): Promise<Collection | null> => {
+  const collectionRef = doc(db, `users/${uid}/collections/${slug}`);
+  const collectionSnap = await getDoc(collectionRef);
+  return collectionSnap.exists()
+    ? collectionToJson(collectionSnap.data() as CollectionSnap)
+    : null;
 };
 
 //public functions

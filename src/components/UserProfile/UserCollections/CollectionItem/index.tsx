@@ -1,14 +1,24 @@
 import { Box, Flex, Grid, Image, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import { Collection } from "../../../../interfaces/Collection";
+import { User } from "../../../../interfaces/User";
 
 type indexProps = {
   collection: Collection;
+  user: User;
 };
 
-const Index: React.FC<indexProps> = ({ collection }) => {
+const Index: React.FC<indexProps> = ({ collection, user }) => {
+  const router = useRouter();
   return (
-    <Flex direction="column" cursor="pointer">
+    <Flex
+      direction="column"
+      cursor="pointer"
+      onClick={() => {
+        router.push(`/${user.username}/collections/${collection.slug}`);
+      }}
+    >
       <Box position="relative" w="100%" pb="100%">
         <Flex
           direction="column"

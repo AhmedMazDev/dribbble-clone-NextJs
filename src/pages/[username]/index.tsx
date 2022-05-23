@@ -1,7 +1,6 @@
 import { GetServerSideProps, NextPage } from "next";
-import React, { useContext } from "react";
+import React from "react";
 import UserProfile from "../../components/UserProfile";
-import { UserContext } from "../../context/userContext";
 import { getUserByUsername } from "../../firebase/helpers/firestoreFunctions";
 import { User } from "../../interfaces/User";
 

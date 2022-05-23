@@ -39,7 +39,11 @@ const Index: React.FC<indexProps> = ({ user }) => {
         {userCollections &&
           userCollections.map((collection) => {
             return (
-              <CollectionItem collection={collection} key={collection.slug} />
+              <CollectionItem
+                collection={collection}
+                key={collection.slug}
+                user={user}
+              />
             );
           })}
       </Grid>

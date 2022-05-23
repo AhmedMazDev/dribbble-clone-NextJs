@@ -17,7 +17,6 @@ import { nanoid } from "nanoid";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../../context/userContext";
 import { createCollection } from "../../../firebase/helpers/firestoreFunctions";
-import { User } from "../../../interfaces/User";
 
 type CreateNewCollectionProps = {
   setIsCreatingCollection: (value: boolean) => void;
@@ -32,7 +31,7 @@ const CreateNewCollection: React.FC<CreateNewCollectionProps> = ({
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [nameCharacters, setNameCharacters] = useState(15);
-  const [descriptionCharacters, setDescriptionCharacters] = useState(50);
+  const [descriptionCharacters, setDescriptionCharacters] = useState(80);
   const [nameError, setNameError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -46,9 +45,9 @@ const CreateNewCollection: React.FC<CreateNewCollectionProps> = ({
   const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    if (e.target.value.length <= 50) {
+    if (e.target.value.length <= 80) {
       setDescription(e.target.value);
-      setDescriptionCharacters(50 - e.target.value.length);
+      setDescriptionCharacters(80 - e.target.value.length);
     }
   };
 
