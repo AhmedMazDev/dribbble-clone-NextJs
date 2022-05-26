@@ -53,12 +53,17 @@ export const createPost = async (
 
 export const updtaePost = async (post: Post) => {
   const postRef = doc(db, `posts/${post.slug}`);
-  const updatedPost = updateDoc(postRef, {
+  const updatedPost = await updateDoc(postRef, {
     ...post,
     tags: post.tags,
     title: post.title,
     updatedAt: serverTimestamp(),
   });
+};
+
+export const deletePost = async (slug: string) => {
+  const postRef = doc(db, `posts/${slug}`);
+  const deletedPost = await deleteDoc(postRef);
 };
 
 export const getPostBySlug = async (slug: string): Promise<Post | null> => {
