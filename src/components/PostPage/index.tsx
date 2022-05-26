@@ -34,6 +34,7 @@ const Index: React.FC<indexProps> = ({ post }) => {
         postId={post.slug}
         postImageURL={post.imageUrl}
         postImageName={post.imageName}
+        postTitle={post.title}
       />
       <Image
         src={post.imageUrl}

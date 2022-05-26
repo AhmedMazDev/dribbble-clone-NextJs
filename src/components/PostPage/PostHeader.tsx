@@ -15,6 +15,7 @@ type PostHeaderProps = {
   postId: string;
   postImageURL: string;
   postImageName: string;
+  postTitle: string;
 };
 
 const PostHeader: React.FC<PostHeaderProps> = ({
@@ -24,7 +25,9 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   numberOfLikes,
   postId,
   postImageName,
+
   postImageURL,
+  postTitle,
 }) => {
   const router = useRouter();
   const { user } = useContext(UserContext);
@@ -68,20 +71,31 @@ const PostHeader: React.FC<PostHeaderProps> = ({
       w="100%"
       maxWidth="900px"
     >
-      <Flex
-        cursor="pointer"
-        align="center"
-        justify="center"
-        gap={4}
-        onClick={() => {
-          router.push(`/${username}`);
-        }}
-      >
-        <Avatar src={userPhoto} />
-
-        <Text fontSize={24} fontWeight="medium" display={["none", "unset"]}>
-          {userDisplayName}
-        </Text>
+      <Flex align="center" justify="center" gap={4}>
+        <Avatar
+          src={userPhoto}
+          size={"md"}
+          cursor="pointer"
+          onClick={() => {
+            router.push(`/${username}`);
+          }}
+        />
+        <Flex direction={"column"}>
+          <Text fontSize={24} fontWeight="bold" display={["none", "unset"]}>
+            {postTitle}
+          </Text>
+          <Text
+            fontSize={18}
+            fontWeight="medium"
+            display={["none", "unset"]}
+            cursor="pointer"
+            onClick={() => {
+              router.push(`/${username}`);
+            }}
+          >
+            {userDisplayName}
+          </Text>
+        </Flex>
       </Flex>
       <Flex align="center" gap={4}>
         <Icon
