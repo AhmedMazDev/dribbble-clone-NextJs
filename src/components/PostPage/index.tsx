@@ -1,7 +1,8 @@
-import { Flex, Image } from "@chakra-ui/react";
-import React, { useContext } from "react";
-import { AppContext } from "../../context/AppContext/appContext";
+import { Button, Flex, Image } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../context/userContext";
 import { Post } from "../../interfaces/Post";
+import EditPostModal from "../Modals/EditPostModal";
 import PostExtras from "./PostExtras";
 import PostHeader from "./PostHeader";
 
@@ -10,6 +11,9 @@ type indexProps = {
 };
 
 const Index: React.FC<indexProps> = ({ post }) => {
+  const { user } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Flex
       direction="column"
@@ -17,7 +21,6 @@ const Index: React.FC<indexProps> = ({ post }) => {
       justify="space-between"
       mt={8}
       w="80%"
-      // maxWidth="900px"
       mx="auto"
       gap={8}
     >
@@ -38,6 +41,22 @@ const Index: React.FC<indexProps> = ({ post }) => {
         maxHeight="670px"
         maxWidth="900px"
       />
+      {user && user.username === post.username && (
+        <>
+          <Flex gap={4}>
+            <Button
+              onClick={() => {
+                setIsOpen(true);
+              }}
+            >
+              Edit Post
+            </Button>
+            <Button variant={"delete"}>Delete Post</Button>
+          </Flex>
+          <EditPostModal isOpen={isOpen} setIsOpen={setIsOpen} post={post} />
+        </>
+      )}
+
       <PostExtras post={post} />
     </Flex>
   );

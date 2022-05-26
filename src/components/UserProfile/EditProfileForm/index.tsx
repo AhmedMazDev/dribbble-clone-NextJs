@@ -176,7 +176,7 @@ const Index: React.FC<indexProps> = ({ user }) => {
             </>
           )}
           <Button
-            variant={"cancel"}
+            variant={"delete"}
             onClick={() => {
               setUserData({
                 ...userData,

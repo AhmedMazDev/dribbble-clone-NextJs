@@ -43,5 +43,16 @@ export const Button: ComponentStyleConfig = {
         bg: "gray.100",
       },
     },
+    delete: {
+      bg: "white",
+      color: "#ff0e0e",
+      border: "1px solid #ff0e0e",
+      fontWeight: "400",
+      fontFamily: "Rubik",
+      borderRadius: "10px",
+      _hover: {
+        bg: "gray.100",
+      },
+    },
   },
 };

@@ -51,6 +51,16 @@ export const createPost = async (
   return post;
 };
 
+export const updtaePost = async (post: Post) => {
+  const postRef = doc(db, `posts/${post.slug}`);
+  const updatedPost = updateDoc(postRef, {
+    ...post,
+    tags: post.tags,
+    title: post.title,
+    updatedAt: serverTimestamp(),
+  });
+};
+
 export const getPostBySlug = async (slug: string): Promise<Post | null> => {
   const postRef = doc(db, `posts/${slug}`);
   const post = await getDoc(postRef);

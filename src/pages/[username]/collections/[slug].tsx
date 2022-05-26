@@ -91,6 +91,7 @@ const CollectionPage: NextPage<CollectionProps> = ({
                 onClick={() => {
                   setIsAlertOpen(true);
                 }}
+                variant="delete"
               >
                 Delete Collection
               </Button>
