@@ -1,6 +1,9 @@
-import { Grid, Text } from "@chakra-ui/react";
+import { Button, Flex, Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { getUserCollectionsByUID } from "../../../firebase/helpers/firestoreFunctions";
+import {
+  getUserCollectionsByUID,
+  LIMIT,
+} from "../../../firebase/helpers/firestoreFunctions";
 import { Collection } from "../../../interfaces/Collection";
 import { User } from "../../../interfaces/User";
 import CollectionItem from "./CollectionItem";
@@ -11,6 +14,7 @@ type indexProps = {
 
 const Index: React.FC<indexProps> = ({ user }) => {
   const [userCollections, setUserCollections] = useState<Collection[]>([]);
+
   useEffect(() => {
     const getUserCollections = async () => {
       const collections = await getUserCollectionsByUID(user.uid);
@@ -31,7 +35,7 @@ const Index: React.FC<indexProps> = ({ user }) => {
   }
 
   return (
-    <>
+    <Flex w="100%" direction={"column"} gap={10}>
       <Grid
         gridTemplateColumns="repeat(auto-fill, minmax(270px, 1fr))"
         gridGap={"48px"}
@@ -47,7 +51,7 @@ const Index: React.FC<indexProps> = ({ user }) => {
             );
           })}
       </Grid>
-    </>
+    </Flex>
   );
 };
 export default Index;

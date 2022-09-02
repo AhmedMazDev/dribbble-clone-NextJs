@@ -1,7 +1,12 @@
 import { Flex, Grid } from "@chakra-ui/react";
 import type { GetServerSideProps, NextPage } from "next";
+import { useState } from "react";
 import PostList from "../components/PostsList";
-import { getLatestPosts } from "../firebase/helpers/firestoreFunctions";
+import {
+  getLatestPosts,
+  getLatestPostsPaginated,
+  LIMIT,
+} from "../firebase/helpers/firestoreFunctions";
 import { Post } from "../interfaces/Post";
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -18,10 +23,34 @@ type Props = {
 };
 
 const Home: NextPage<Props> = ({ posts }) => {
+  const [allPosts, setAllPosts] = useState<Post[]>(posts);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasMorePosts, setHasMorePosts] = useState<boolean>(true);
+
+  const loadMorePosts = async () => {
+    setIsLoading(true);
+    const last = allPosts[allPosts.length - 1];
+    const cursor = last.createdAt;
+
+    const newPosts = await getLatestPostsPaginated(cursor);
+
+    setAllPosts((prev) => [...prev, ...newPosts]);
+    setIsLoading(false);
+
+    if (newPosts.length < LIMIT) {
+      setHasMorePosts(false);
+    }
+  };
+
   return (
     <>
       <Flex w="95%" m="0 auto">
-        <PostList posts={posts} />
+        <PostList
+          posts={allPosts}
+          loadMorePosts={loadMorePosts}
+          isLoading={isLoading}
+          hasMorePosts={hasMorePosts}
+        />
       </Flex>
     </>
   );

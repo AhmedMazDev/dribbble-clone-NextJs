@@ -12,6 +12,7 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  startAfter,
   updateDoc,
   where,
   writeBatch,
@@ -21,6 +22,8 @@ import { Collection, CollectionSnap } from "../../interfaces/Collection";
 import { Post, PostCollection, PostSnapshot } from "../../interfaces/Post";
 import { User } from "../../interfaces/User";
 import { db } from "../firebaseConfig";
+
+export const LIMIT = 10;
 
 //Post related Functions
 export const createPost = async (
@@ -94,8 +97,26 @@ export const likeOrUnlikePost = async (
 };
 
 export const getLatestPosts = async (): Promise<Post[]> => {
-  const q = query(collection(db, "posts"), orderBy("createdAt"), limit(20));
+  const q = query(
+    collection(db, "posts"),
+    orderBy("createdAt", "desc"),
+    limit(LIMIT)
+  );
   const postsSnap = await getDocs(q);
+  return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
+};
+
+export const getLatestPostsPaginated = async (
+  cursor: number
+): Promise<Post[]> => {
+  const q = query(
+    collection(db, "posts"),
+    orderBy("createdAt", "desc"),
+    startAfter(new Date(cursor)),
+    limit(LIMIT)
+  );
+  const postsSnap = await getDocs(q);
+  console.log("postsSnap", postsSnap);
   return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
 };
 
@@ -117,9 +138,26 @@ export const getPostsByUserName = async (
   const q = query(
     collection(db, "posts"),
     where("username", "==", username),
-    orderBy("createdAt"),
-    limit(3)
+    orderBy("createdAt", "desc"),
+    limit(LIMIT)
   );
+  const postsSnap = await getDocs(q);
+  if (postsSnap.empty) return [];
+  return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
+};
+
+export const getPostsByUserNamePaginated = async (
+  username: string,
+  cursor: number
+): Promise<Post[] | []> => {
+  const q = query(
+    collection(db, "posts"),
+    where("username", "==", username),
+    orderBy("createdAt", "desc"),
+    startAfter(new Date(cursor)),
+    limit(LIMIT)
+  );
+  ``;
   const postsSnap = await getDocs(q);
   if (postsSnap.empty) return [];
   return postsSnap.docs.map((post) => postToJson(post.data() as PostSnapshot));
@@ -175,7 +213,8 @@ export const getUserPostsByUsername = async (
   const q = query(
     collection(db, "posts"),
     where("username", "==", username),
-    limit(20)
+    orderBy("createdAt", "desc"),
+    limit(LIMIT)
   );
   const postsSnap = await getDocs(q);
   return postsSnap.docs.length > 0
@@ -209,7 +248,34 @@ export const getUserLikedPostsByUID = async (
 
   const q = query(
     collection(db, "posts"),
-    where("slug", "in", userLikedPostsSlugs)
+    where("slug", "in", userLikedPostsSlugs),
+    orderBy("createdAt", "desc"),
+    limit(LIMIT)
+  );
+  const postsSnap = await getDocs(q);
+  const posts = postsSnap.docs.map((post) =>
+    postToJson(post.data() as PostSnapshot)
+  );
+  return posts.length > 0 ? posts : [];
+};
+
+export const getUserLikedPostsByUIDPaginated = async (
+  uid: string,
+  cursor: number
+): Promise<Post[] | []> => {
+  const userLikedPostsRef = collection(db, `users/${uid}/likedPosts`);
+  const userLikedPostsSnap = await getDocs(userLikedPostsRef);
+
+  const userLikedPostsSlugs = userLikedPostsSnap.docs.map((doc) => doc.id);
+
+  if (userLikedPostsSlugs.length === 0) return [];
+
+  const q = query(
+    collection(db, "posts"),
+    where("slug", "in", userLikedPostsSlugs),
+    orderBy("createdAt", "desc"),
+    startAfter(new Date(cursor)),
+    limit(LIMIT)
   );
   const postsSnap = await getDocs(q);
   const posts = postsSnap.docs.map((post) =>

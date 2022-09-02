@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getUserPostsByUsername } from "../../../firebase/helpers/firestoreFunctions";
+import {
+  getPostsByUserNamePaginated,
+  getUserPostsByUsername,
+  LIMIT,
+} from "../../../firebase/helpers/firestoreFunctions";
 import { Post } from "../../../interfaces/Post";
 import { User } from "../../../interfaces/User";
 import PostsList from "../../PostsList";
@@ -11,6 +15,25 @@ type indexProps = {
 
 const Index: React.FC<indexProps> = ({ user }) => {
   const [userPosts, setUserPosts] = useState<Post[]>([]);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasMorePosts, setHasMorePosts] = useState<boolean>(true);
+
+  const loadMorePosts = async () => {
+    setIsLoading(true);
+    const last = userPosts[userPosts.length - 1];
+    const cursor = last.createdAt;
+
+    const newPosts = await getPostsByUserNamePaginated(user.username, cursor);
+
+    setUserPosts((prev) => [...prev, ...newPosts]);
+    setIsLoading(false);
+
+    if (newPosts.length < LIMIT) {
+      setHasMorePosts(false);
+    }
+  };
+
   useEffect(() => {
     const getUserPosts = async () => {
       const posts = await getUserPostsByUsername(user.username);
@@ -32,7 +55,12 @@ const Index: React.FC<indexProps> = ({ user }) => {
 
   return (
     <>
-      <PostsList posts={userPosts} />
+      <PostsList
+        posts={userPosts}
+        loadMorePosts={loadMorePosts}
+        hasMorePosts={hasMorePosts}
+        isLoading={isLoading}
+      />
     </>
   );
 };
