@@ -34,7 +34,15 @@ const Index: React.FC<indexProps> = ({
       setPosts(allPosts.data.data);
     };
 
+    const fetchUsers = async () => {
+      const allUsers = await axios.post("/api/getUsers", {
+        search: searchTerm,
+      });
+      setUsers(allUsers.data.data);
+    };
+
     fetchPosts();
+    fetchUsers();
   }, [debouncedSearch]);
 
   return (
