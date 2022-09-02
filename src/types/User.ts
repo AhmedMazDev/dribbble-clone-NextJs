@@ -13,6 +13,11 @@ export interface User {
   createdAt: number;
 }
 
+export interface UserAlgolia {
+  displayName: string;
+  createdAt: number;
+}
+
 export interface UserContext {
   user: User | null;
   userLikedPosts: UserLikedPosts[] | null;

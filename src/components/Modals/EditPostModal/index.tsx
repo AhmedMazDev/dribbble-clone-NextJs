@@ -20,8 +20,8 @@ import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import { AppContext } from "../../../context/AppContext/appContext";
 import { updtaePost } from "../../../firebase/helpers/firestoreFunctions";
-import { Tag } from "../../../interfaces/AppContext";
-import { Post } from "../../../interfaces/Post";
+import { Tag } from "../../../types/AppContext";
+import { Post } from "../../../types/Post";
 
 type indexProps = {
   isOpen: boolean;

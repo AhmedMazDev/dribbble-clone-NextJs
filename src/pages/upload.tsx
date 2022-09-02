@@ -9,6 +9,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { CUIAutoComplete } from "chakra-ui-autocomplete";
 import { nanoid } from "nanoid/async";
 import { GetServerSideProps } from "next";
@@ -19,7 +20,7 @@ import { UserContext } from "../context/userContext";
 import { createPost, getTags } from "../firebase/helpers/firestoreFunctions";
 import useSelectImage from "../hooks/useSelectFile";
 import useUploadImage from "../hooks/useUploadImage";
-import { Tag } from "../interfaces/AppContext";
+import { Tag } from "../types/AppContext";
 
 type uploadProps = {};
 
@@ -212,6 +213,19 @@ const PostDetails: React.FC<PostDetailsProps> = ({
         userData.user?.displayName!,
         userData.user?.photoUrl
       );
+
+      const res = await axios.post("/api/addPost", {
+        title,
+        slug,
+        imageUrl: imageURL,
+        imageName,
+        tags: tags.map((tag) => tag.value),
+        username: userData.user?.username!,
+        displayName: userData.user?.displayName!,
+        photoUrl: userData.user?.photoUrl,
+      });
+
+      console.log("res", res);
     }
 
     if (imageURL) {

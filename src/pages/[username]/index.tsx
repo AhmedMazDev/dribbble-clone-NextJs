@@ -2,7 +2,7 @@ import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import UserProfile from "../../components/UserProfile";
 import { getUserByUsername } from "../../firebase/helpers/firestoreFunctions";
-import { User } from "../../interfaces/User";
+import { User } from "../../types/User";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const username = context.query.username;

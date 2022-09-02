@@ -6,8 +6,8 @@ import {
   useDocumentData,
 } from "react-firebase-hooks/firestore";
 import { auth, db } from "../firebase/firebaseConfig";
-import { Collection } from "../interfaces/Collection";
-import { User, UserLikedPosts } from "../interfaces/User";
+import { Collection } from "../types/Collection";
+import { User, UserLikedPosts } from "../types/User";
 
 export function useUserData() {
   const [currentUser] = useAuthState(auth);

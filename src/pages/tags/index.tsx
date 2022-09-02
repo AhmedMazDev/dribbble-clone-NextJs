@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext/appContext";
 import groupBy from "lodash.groupby";
-import { Tag } from "../../interfaces/AppContext";
+import { Tag } from "../../types/AppContext";
 import { Dictionary } from "lodash";
 import { useRouter } from "next/router";
 

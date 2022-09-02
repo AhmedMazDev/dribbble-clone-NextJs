@@ -2,7 +2,7 @@ import { Avatar, Button, Flex, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { UserContext } from "../../../context/userContext";
-import { User } from "../../../interfaces/User";
+import { User } from "../../../types/User";
 
 type indexProps = {
   user: User;

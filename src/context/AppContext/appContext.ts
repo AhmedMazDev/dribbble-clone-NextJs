@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { AppContext as appContext } from "../../interfaces/AppContext";
+import { AppContext as appContext } from "../../types/AppContext";
 
 export const AppContext = createContext<appContext>({
   tags: [],

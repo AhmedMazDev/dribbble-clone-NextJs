@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -5,7 +6,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { doc, getDoc, setDoc, writeBatch } from "firebase/firestore";
-import { User } from "../../interfaces/User";
+import { User } from "../../types/User";
 import { auth, db } from "../firebaseConfig";
 
 export const createUserWithEmail = async (
@@ -76,6 +77,13 @@ export const addUserToFirestore = async (
   batch.set(usersRef, user);
   batch.set(usernamesRef, { userID: userID });
   await batch.commit();
+
+  await axios.post("/api/addUser", {
+    displayName: user.displayName,
+    createdAt: user.createdAt,
+    photoUrl: user.photoUrl,
+    uid: userID,
+  });
 };
 
 export const isUserNameExists = async (username: string) => {

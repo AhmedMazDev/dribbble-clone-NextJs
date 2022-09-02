@@ -1,6 +1,6 @@
 import { Button, Flex, Grid } from "@chakra-ui/react";
 import React from "react";
-import { Post } from "../../interfaces/Post";
+import { Post } from "../../types/Post";
 import PostItem from "./PostItem";
 
 type indexProps = {

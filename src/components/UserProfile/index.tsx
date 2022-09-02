@@ -8,7 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { User } from "../../interfaces/User";
+import { User } from "../../types/User";
 import UserAbout from "./UserAbout";
 import UserCollections from "./UserCollections";
 import UserDetails from "./UserDetails";

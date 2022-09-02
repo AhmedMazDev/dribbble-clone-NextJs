@@ -4,8 +4,8 @@ import {
   getUserCollectionsByUID,
   LIMIT,
 } from "../../../firebase/helpers/firestoreFunctions";
-import { Collection } from "../../../interfaces/Collection";
-import { User } from "../../../interfaces/User";
+import { Collection } from "../../../types/Collection";
+import { User } from "../../../types/User";
 import CollectionItem from "./CollectionItem";
 
 type indexProps = {

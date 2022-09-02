@@ -20,7 +20,7 @@ import {
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { updatedCollection } from "../../../firebase/helpers/firestoreFunctions";
-import { Collection } from "../../../interfaces/Collection";
+import { Collection } from "../../../types/Collection";
 
 type IndexProps = {
   collection: Collection;

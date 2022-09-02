@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
-import { Post } from "../../interfaces/Post";
+import { Post } from "../../types/Post";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FiFolderPlus } from "react-icons/fi";
 import { MdOutlineSaveAlt } from "react-icons/md";

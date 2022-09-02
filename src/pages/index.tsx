@@ -7,7 +7,7 @@ import {
   getLatestPostsPaginated,
   LIMIT,
 } from "../firebase/helpers/firestoreFunctions";
-import { Post } from "../interfaces/Post";
+import { Post } from "../types/Post";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const posts = await getLatestPosts();

@@ -11,9 +11,9 @@ import {
   getPostsInCollectionBySlug,
   getUserByUsername,
 } from "../../../firebase/helpers/firestoreFunctions";
-import { Collection } from "../../../interfaces/Collection";
-import { Post } from "../../../interfaces/Post";
-import { User } from "../../../interfaces/User";
+import { Collection } from "../../../types/Collection";
+import { Post } from "../../../types/Post";
+import { User } from "../../../types/User";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { username, slug } = context.query;

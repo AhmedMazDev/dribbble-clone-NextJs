@@ -1,7 +1,7 @@
 import { Button, Flex, Image } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
-import { Post } from "../../interfaces/Post";
+import { Post } from "../../types/Post";
 import DeletePostAlert from "../Modals/DeletePostAlert";
 import EditPostModal from "../Modals/EditPostModal";
 import PostExtras from "./PostExtras";

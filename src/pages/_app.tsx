@@ -8,7 +8,7 @@ import Navbar from "../components/Navbar";
 import AppContextProvider from "../context/AppContext/AppContextProvider";
 import { UserContext } from "../context/userContext";
 import { useUserData } from "../hooks/useUserData";
-import { UserContext as userContext } from "../interfaces/User";
+import { UserContext as userContext } from "../types/User";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();

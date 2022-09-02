@@ -12,6 +12,15 @@ export interface IPost {
   userPhoto?: string;
 }
 
+export interface PostAlgolia {
+  title: string;
+  slug: string;
+  tags: string[];
+  username: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
 export interface Post extends IPost {
   createdAt: number;
   updatedAt: number;

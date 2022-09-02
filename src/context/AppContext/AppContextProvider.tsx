@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getTags } from "../../firebase/helpers/firestoreFunctions";
-import { Tag } from "../../interfaces/AppContext";
+import { Tag } from "../../types/AppContext";
 import { AppContext } from "./appContext";
 
 type AppContextProviderProps = {

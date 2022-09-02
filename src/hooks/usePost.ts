@@ -6,7 +6,7 @@ import {
   addOrRemovePostToCollection,
   likeOrUnlikePost,
 } from "../firebase/helpers/firestoreFunctions";
-import { Collection } from "../interfaces/Collection";
+import { Collection } from "../types/Collection";
 
 const usePost = (postId: string) => {
   const { user, userLikedPosts } = useContext(UserContext);

@@ -4,8 +4,8 @@ import {
   getUserPostsByUsername,
   LIMIT,
 } from "../../../firebase/helpers/firestoreFunctions";
-import { Post } from "../../../interfaces/Post";
-import { User } from "../../../interfaces/User";
+import { Post } from "../../../types/Post";
+import { User } from "../../../types/User";
 import PostsList from "../../PostsList";
 import { Text } from "@chakra-ui/react";
 

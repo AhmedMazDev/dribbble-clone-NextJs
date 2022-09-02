@@ -17,10 +17,10 @@ import {
   where,
   writeBatch,
 } from "firebase/firestore";
-import { Tag } from "../../interfaces/AppContext";
-import { Collection, CollectionSnap } from "../../interfaces/Collection";
-import { Post, PostCollection, PostSnapshot } from "../../interfaces/Post";
-import { User } from "../../interfaces/User";
+import { Tag } from "../../types/AppContext";
+import { Collection, CollectionSnap } from "../../types/Collection";
+import { Post, PostCollection, PostSnapshot } from "../../types/Post";
+import { User } from "../../types/User";
 import { db } from "../firebaseConfig";
 
 export const LIMIT = 10;

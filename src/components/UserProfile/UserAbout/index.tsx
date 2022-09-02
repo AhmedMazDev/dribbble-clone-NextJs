@@ -1,6 +1,6 @@
 import { Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
-import { User } from "../../../interfaces/User";
+import { User } from "../../../types/User";
 import { GoLocation } from "react-icons/go";
 import { FaBirthdayCake } from "react-icons/fa";
 import moment from "moment";

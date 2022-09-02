@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
-import { User } from "../../interfaces/User";
+import { User } from "../../types/User";
 import SearchInput from "./SearchInput";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";

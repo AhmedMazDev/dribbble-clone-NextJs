@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { deleteCollection } from "../../../firebase/helpers/firestoreFunctions";
-import { Collection } from "../../../interfaces/Collection";
+import { Collection } from "../../../types/Collection";
 
 type IndexProps = {
   collection: Collection;

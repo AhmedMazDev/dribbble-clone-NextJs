@@ -1,8 +1,8 @@
 import { Box, Flex, Grid, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
-import { Collection } from "../../../../interfaces/Collection";
-import { User } from "../../../../interfaces/User";
+import { Collection } from "../../../../types/Collection";
+import { User } from "../../../../types/User";
 
 type indexProps = {
   collection: Collection;

@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getPostsByUserName } from "../../../firebase/helpers/firestoreFunctions";
-import { Post } from "../../../interfaces/Post";
+import { Post } from "../../../types/Post";
 import PostsList from "../../PostsList";
 
 type MorePostsProps = {

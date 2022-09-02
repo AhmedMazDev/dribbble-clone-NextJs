@@ -5,7 +5,7 @@ import {
   getPostsByTag,
   isTagExist,
 } from "../../firebase/helpers/firestoreFunctions";
-import { Post } from "../../interfaces/Post";
+import { Post } from "../../types/Post";
 import PostsList from "../../components/PostsList";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

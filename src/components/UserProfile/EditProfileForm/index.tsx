@@ -16,7 +16,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { updateUserProfile } from "../../../firebase/helpers/firestoreFunctions";
 import useSelectFile from "../../../hooks/useSelectFile";
 import useUploadImage from "../../../hooks/useUploadImage";
-import { User } from "../../../interfaces/User";
+import { User } from "../../../types/User";
 
 type indexProps = {
   user: User;

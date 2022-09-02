@@ -1,6 +1,6 @@
 import { Flex, Text, Image, Icon, Spinner, useToast } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
-import { Collection } from "../../../../interfaces/Collection";
+import { Collection } from "../../../../types/Collection";
 import { BsCheckLg } from "react-icons/bs";
 import usePost from "../../../../hooks/usePost";
 

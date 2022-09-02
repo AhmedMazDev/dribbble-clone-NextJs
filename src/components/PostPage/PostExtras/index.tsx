@@ -1,7 +1,7 @@
 import { Avatar, Box, Divider, Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
-import { Post } from "../../../interfaces/Post";
+import { Post } from "../../../types/Post";
 import MorePosts from "./MorePosts";
 import SimilarPosts from "./SimilarPosts";
 

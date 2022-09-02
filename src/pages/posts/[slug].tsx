@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { getPostBySlug } from "../../firebase/helpers/firestoreFunctions";
-import { Post } from "../../interfaces/Post";
+import { Post } from "../../types/Post";
 import PostPage from "../../components/PostPage";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";

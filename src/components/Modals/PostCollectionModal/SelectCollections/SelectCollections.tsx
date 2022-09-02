@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../context/userContext";
-import { Collection as IColl } from "../../../../interfaces/Collection";
+import { Collection as IColl } from "../../../../types/Collection";
 import Collection from "./Collection";
 
 type SelectCollectionsProps = {

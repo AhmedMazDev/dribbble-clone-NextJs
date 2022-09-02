@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { getSimilarPosts } from "../../../firebase/helpers/firestoreFunctions";
-import { Post } from "../../../interfaces/Post";
+import { Post } from "../../../types/Post";
 import PostsList from "../../PostsList";
 
 type SimilarPostsProps = {
