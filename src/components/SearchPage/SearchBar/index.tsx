@@ -56,10 +56,9 @@ const Index: React.FC<indexProps> = ({
         gap={4}
       >
         <InputGroup size="lg">
-          <InputLeftElement
-            pointerEvents="none"
-            children={<Search2Icon w={[4, 6]} h={[4, 6]} color="textColor" />}
-          />
+          <InputLeftElement pointerEvents="none">
+            <Search2Icon w={[4, 6]} h={[4, 6]} color="textColor" />
+          </InputLeftElement>
           <Input
             type="search"
             placeholder="Search..."
