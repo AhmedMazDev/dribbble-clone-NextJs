@@ -5,7 +5,8 @@ import {
   ServiceAccount,
 } from "firebase-admin/app";
 import admin from "firebase-admin";
-import secretKeys from "../../secretKeys.json";
+
+const secretKeys = JSON.parse(process.env.SERVICE_ACCOUNT_KEY as string);
 
 if (!admin.apps.length) {
   admin.initializeApp({
