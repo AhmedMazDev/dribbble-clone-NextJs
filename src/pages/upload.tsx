@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AppContext } from "../context/AppContext/appContext";
 import { UserContext } from "../context/userContext";
+import { auth } from "../firebase/firebaseConfig";
 import { createPost, getTags } from "../firebase/helpers/firestoreFunctions";
 import useSelectImage from "../hooks/useSelectFile";
 import useUploadImage from "../hooks/useUploadImage";
@@ -203,29 +204,39 @@ const PostDetails: React.FC<PostDetailsProps> = ({
 
   useEffect(() => {
     async function createPostAsync() {
-      await createPost(
-        title,
-        slug,
-        imageURL,
-        imageName,
-        tags.map((tag) => tag.value),
-        userData.user?.username!,
-        userData.user?.displayName!,
-        userData.user?.photoUrl
-      );
+      auth.currentUser
+        ?.getIdToken(true)
+        .then(async function (idToken) {
+          await createPost(
+            title,
+            slug,
+            imageURL,
+            imageName,
+            tags.map((tag) => tag.value),
+            userData.user?.username!,
+            userData.user?.displayName!,
+            userData.user?.photoUrl
+          );
 
-      const res = await axios.post("/api/addPost", {
-        title,
-        slug,
-        imageUrl: imageURL,
-        imageName,
-        tags: tags.map((tag) => tag.value),
-        username: userData.user?.username!,
-        displayName: userData.user?.displayName!,
-        photoUrl: userData.user?.photoUrl,
-      });
+          //posting to algolia
+          const res = await axios.post("/api/addPost", {
+            title,
+            slug,
+            imageUrl: imageURL,
+            imageName,
+            tags: tags.map((tag) => tag.value),
+            username: userData.user?.username!,
+            displayName: userData.user?.displayName!,
+            photoUrl: userData.user?.photoUrl,
+            idToken,
+          });
 
-      console.log("res", res);
+          console.log("res", res);
+        })
+        .catch(function (error) {
+          // Handle error
+          console.log("error", error);
+        });
     }
 
     if (imageURL) {

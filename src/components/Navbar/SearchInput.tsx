@@ -51,6 +51,14 @@ const SearchInput: React.FC<SearchInputProps> = () => {
         border="1px solid gray"
         borderRadius={10}
         padding={2}
+        onClick={() => {
+          router.push({
+            pathname: "/search",
+            query: {
+              search,
+            },
+          });
+        }}
       />
     </form>
   );
