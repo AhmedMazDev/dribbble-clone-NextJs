@@ -221,7 +221,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({
           //posting to algolia
           const res = await axios.post(
             "/api/addPost",
-            JSON.stringify({
+            {
               title,
               slug,
               imageUrl: imageURL,
@@ -231,7 +231,7 @@ const PostDetails: React.FC<PostDetailsProps> = ({
               displayName: userData.user?.displayName!,
               photoUrl: userData.user?.photoUrl,
               idToken,
-            }),
+            },
             {
               method: "POST",
               headers: {
