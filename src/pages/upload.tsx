@@ -219,17 +219,26 @@ const PostDetails: React.FC<PostDetailsProps> = ({
           );
 
           //posting to algolia
-          const res = await axios.post("/api/addPost", {
-            title,
-            slug,
-            imageUrl: imageURL,
-            imageName,
-            tags: tags.map((tag) => tag.value),
-            username: userData.user?.username!,
-            displayName: userData.user?.displayName!,
-            photoUrl: userData.user?.photoUrl,
-            idToken,
-          });
+          const res = await axios.post(
+            "/api/addPost",
+            JSON.stringify({
+              title,
+              slug,
+              imageUrl: imageURL,
+              imageName,
+              tags: tags.map((tag) => tag.value),
+              username: userData.user?.username!,
+              displayName: userData.user?.displayName!,
+              photoUrl: userData.user?.photoUrl,
+              idToken,
+            }),
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
           console.log("res", res);
         })
