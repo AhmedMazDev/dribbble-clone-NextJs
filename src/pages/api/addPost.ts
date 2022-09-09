@@ -6,7 +6,7 @@ import { Post, PostAlgolia } from "../../types/Post";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (!req.body.idToken) {
-      res.status(400).send({
+      return res.status(400).send({
         error: "no token",
       });
     }
@@ -18,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const body = req.body as Post;
 
         if (!body.title || !body.username) {
-          res.status(400).send({
+          return res.status(400).send({
             status: 400,
             error: "Missing body",
           });
@@ -34,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           slug: body.slug,
         });
 
-        res.status(200).json({
+        return res.status(200).json({
           success: true,
           data: {
             post,
@@ -42,7 +42,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         });
       })
       .catch((error) => {
-        res.status(400).send({
+        return res.status(400).send({
           error: "invalid token",
         });
       });
