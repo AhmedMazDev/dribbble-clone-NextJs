@@ -4,6 +4,7 @@ import { postIndex } from "../../lib/algolia";
 import { Post, PostAlgolia } from "../../types/Post";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  res.status(200).json(req.body);
   try {
     if (!req.body.idToken) {
       return res.status(400).send({
